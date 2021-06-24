@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/customd/Laravel-Helpers/compare/v1.0.0...v1.0.1) (2021-06-24)
+
+
+### Bug Fixes
+
+* **helper:** allow array based args to be passed to execute method ([5c264a9](https://github.com/customd/Laravel-Helpers/commit/5c264a9ef4553af6ebde392924f5130ac6dc2de8))
+
 # 1.0.0 (2021-06-24)
 
 
