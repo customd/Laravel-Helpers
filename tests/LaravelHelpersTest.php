@@ -54,6 +54,23 @@ class LaravelHelpersTest extends TestCase
         execute(ExecutableAction::class, ['bar']);
     }
 
+    public function testExecuteHelperCallsActionWithOneArgAsArray()
+    {
+        $arg = ['me','my'];
+        $this->instance(
+            ExecutableAction::class,
+            Mockery::mock(ExecutableAction::class, function (MockInterface $mock) use ($arg) {
+                $mock
+                ->shouldReceive('execute')
+                ->once()
+                ->with($arg)
+                ->andReturn(true);
+            })
+        );
+
+        execute(ExecutableAction::class, [$arg]);
+    }
+
     public function testExecuteHelperCallsActionWithMultipleArgs()
     {
         $this->instance(
@@ -68,5 +85,25 @@ class LaravelHelpersTest extends TestCase
         );
 
         execute(ExecutableAction::class, ['bar', 'car', 'bike']);
+    }
+
+
+    public function testExecuteHelperCallsActionWithArrayAsArgs()
+    {
+
+        $arrayArg = ['me','my','mine'];
+
+        $this->instance(
+            ExecutableAction::class,
+            Mockery::mock(ExecutableAction::class, function (MockInterface $mock) use ($arrayArg) {
+                $mock
+                ->shouldReceive('execute')
+                ->once()
+                ->with($arrayArg, 'car', 'bike')
+                ->andReturn(true);
+            })
+        );
+
+        execute(ExecutableAction::class, [$arrayArg, 'car', 'bike']);
     }
 }
