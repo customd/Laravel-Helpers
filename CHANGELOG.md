@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/customd/Laravel-Helpers/compare/v1.0.1...v1.1.0) (2021-06-25)
+
+
+### Features
+
+* **policy:** CRUD trait added to handle basic crud permissions with policy ([ab3c2ea](https://github.com/customd/Laravel-Helpers/commit/ab3c2ea23eded37a962675907967c37670a7a718))
+
 ## [1.0.1](https://github.com/customd/Laravel-Helpers/compare/v1.0.0...v1.0.1) (2021-06-24)
 
 
