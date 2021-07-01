@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/customd/Laravel-Helpers/compare/v1.1.0...v1.2.0) (2021-07-01)
+
+
+### Features
+
+* Notification delayed blocking after the affect ([37321e6](https://github.com/customd/Laravel-Helpers/commit/37321e6eeb6d0ae3c316e170be6e6b4e418059d5))
+
 # [1.1.0](https://github.com/customd/Laravel-Helpers/compare/v1.0.1...v1.1.0) (2021-06-25)
 
 
