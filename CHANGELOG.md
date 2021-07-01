@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/customd/Laravel-Helpers/compare/v1.2.0...v1.2.1) (2021-07-01)
+
+
+### Bug Fixes
+
+* updated method name to suite original work ([65b668b](https://github.com/customd/Laravel-Helpers/commit/65b668b70d67ea0b3834fc48aebb5a8e0c3750ef))
+
 # [1.2.0](https://github.com/customd/Laravel-Helpers/compare/v1.1.0...v1.2.0) (2021-07-01)
 
 
