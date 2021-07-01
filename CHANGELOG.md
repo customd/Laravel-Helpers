@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/customd/Laravel-Helpers/compare/v1.2.1...v1.2.2) (2021-07-01)
+
+
+### Bug Fixes
+
+* allow php 8 ([0739d39](https://github.com/customd/Laravel-Helpers/commit/0739d39d675032770b1e6793600064fca2e07e5c))
+
 ## [1.2.1](https://github.com/customd/Laravel-Helpers/compare/v1.2.0...v1.2.1) (2021-07-01)
 
 
