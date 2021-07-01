@@ -8,8 +8,8 @@ class NotificationSendingListener
 {
     public function handle(NotificationSending $event)
     {
-        if (method_exists($event->notification, 'blockSend')) {
-            return ! $event->notification->blockSend($event->notifiable);
+        if (method_exists($event->notification, 'blockSending')) {
+            return ! $event->notification->blockSending($event->notifiable);
         }
 
         return true;

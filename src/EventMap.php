@@ -8,7 +8,7 @@ use CustomD\LaravelHelpers\Listeners\NotificationSendingListener;
 trait EventMap
 {
 
-    protected $listen = [
+    protected $events = [
         NotificationSending::class => [
             NotificationSendingListener::class,
         ],
