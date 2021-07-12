@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/customd/Laravel-Helpers/compare/v1.3.0...v1.4.0) (2021-07-12)
+
+
+### Features
+
+* string reverse helper ([06b03ef](https://github.com/customd/Laravel-Helpers/commit/06b03ef5105411404c25919d82560b7306962d9f))
+
 # [1.3.0](https://github.com/customd/Laravel-Helpers/compare/v1.2.2...v1.3.0) (2021-07-12)
 
 
