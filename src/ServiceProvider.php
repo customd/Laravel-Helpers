@@ -3,6 +3,8 @@
 namespace CustomD\LaravelHelpers;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Database\Query\Builder;
+use CustomD\LaravelHelpers\Database\Query\Mixins\NullOrEmptyMixin;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -12,6 +14,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->registerEvents();
+        $this->registerDbMacros();
     }
 
     public function register()
@@ -25,5 +28,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 Event::listen($event, $listener);
             }
         }
+    }
+
+    protected function registerDbMacros()
+    {
+        Builder::mixin(new NullOrEmptyMixin());
     }
 }

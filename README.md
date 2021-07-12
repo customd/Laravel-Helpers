@@ -1,6 +1,14 @@
-# Laravel Helpers
+# Laravel Helpers <!-- no toc -->
 
 Collection of helpers for re-use accross a few of our projects
+
+
+  - [Installation](#installation)
+  - [Crud Policy Trait](#crud-policy-trait)
+  - [Helpers](#helpers)
+  - [Delayed notifications blocking:](#delayed-notifications-blocking)
+  - [DB Macros](#db-macros)
+  - [Credits](#credits)
 
 ## Installation
 
@@ -95,6 +103,18 @@ class TaskReminder extends Notification implements ShouldQueue
 ```
 
 By listening to that event and then checking our `blockSending()` method on our notification, we can do in-the-moment checks as the notification is being handled to see if it’s still valid. You can even access the `$notifiable` object, which allows you to check fresh data about the user or entity you’re notifying.
+
+
+## DB Macros
+
+### Null Or Empty
+when dealing with some of our legacy databases we have some columns where the entry is either null or empty and these macros allow you to query this without the double entries:
+
+```php
+Model::whereNullOrEmpty('column_name'); //generates select * where 1=1 and (column_name is null or column_name = '')
+Model::orWhereNullOrEmpty('column_name'); //generates select * where 1=1 or (column_name is null or column_name = '')
+Model::whereNotNullOrEmpty('column_name'); //generates select * where 1=1 and (column_name is not null and column_name != '')
+Model::orWhereNotNullOrEmpty('column_name'); //generates select * where 1=1 or (column_name is not null and column_name != '')
 
 ## Credits
 
