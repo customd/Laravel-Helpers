@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/customd/Laravel-Helpers/compare/v1.2.2...v1.3.0) (2021-07-12)
+
+
+### Features
+
+* **DB:** Macros for null or empty dealings ([15c3e8e](https://github.com/customd/Laravel-Helpers/commit/15c3e8ef5f4099b981c6def3f41a0ab5e5df1ec6))
+
 ## [1.2.2](https://github.com/customd/Laravel-Helpers/compare/v1.2.1...v1.2.2) (2021-07-01)
 
 
