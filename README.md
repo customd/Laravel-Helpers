@@ -8,6 +8,7 @@ Collection of helpers for re-use accross a few of our projects
   - [Helpers](#helpers)
   - [Delayed notifications blocking:](#delayed-notifications-blocking)
   - [DB Macros](#db-macros)
+  - [String Macros](#string-macros)
   - [Credits](#credits)
 
 ## Installation
@@ -115,6 +116,9 @@ Model::whereNullOrEmpty('column_name'); //generates select * where 1=1 and (colu
 Model::orWhereNullOrEmpty('column_name'); //generates select * where 1=1 or (column_name is null or column_name = '')
 Model::whereNotNullOrEmpty('column_name'); //generates select * where 1=1 and (column_name is not null and column_name != '')
 Model::orWhereNotNullOrEmpty('column_name'); //generates select * where 1=1 or (column_name is not null and column_name != '')
+```
+## String Macros
+`Str::reverse(string)` - to safely reverse a string that is multibyte safe.
 
 ## Credits
 
