@@ -16,7 +16,7 @@ trait CrudPermissions
             $action
         ])->filter()->implode(".");
 
-        if (method_exists($model, 'userHasPermission') && ! $model->userHasPermission($user)) {
+        if ($model && method_exists($model, 'userHasPermission') && ! $model->userHasPermission($user)) {
             return false;
         }
 
