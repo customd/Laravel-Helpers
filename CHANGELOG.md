@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/customd/Laravel-Helpers/compare/v1.4.0...v1.4.1) (2021-07-21)
+
+
+### Bug Fixes
+
+* Crud permissions for non-model based check. (ie create) ([49138db](https://github.com/customd/Laravel-Helpers/commit/49138dba1fa9af2c426918a0e068a39b2dfa3887))
+
 # [1.4.0](https://github.com/customd/Laravel-Helpers/compare/v1.3.0...v1.4.0) (2021-07-12)
 
 
