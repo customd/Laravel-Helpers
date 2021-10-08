@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/customd/Laravel-Helpers/compare/v1.4.1...v2.0.0) (2021-10-08)
+
+
+### Features
+
+* execute helper no longer manipulates data ([a786a68](https://github.com/customd/Laravel-Helpers/commit/a786a6874d9be25b57621360d007f2ee85eade77))
+
+
+### BREAKING CHANGES
+
+* - arrays are no longer flattened
+
 ## [1.4.1](https://github.com/customd/Laravel-Helpers/compare/v1.4.0...v1.4.1) (2021-07-21)
 
 
