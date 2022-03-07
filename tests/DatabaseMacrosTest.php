@@ -13,21 +13,12 @@ class DatabaseMacrosTest extends TestCase
 
     protected function defineDatabaseMigrations()
     {
-     //   $this->loadLaravelMigrations(['--database' => 'testbench']);
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
     }
 
-    // protected function defineDatabaseMigrations()
-    // {
-
-    //     $this->loadMigrationsFrom(__DIR__.'/../migrations');
-
-    //     $this->artisan('migrate', ['--database' => 'testbench'])->run();
-    // }
-
     protected function getEnvironmentSetUp($app)
     {
-    # Setup default database to use sqlite :memory:
+        # Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
             'driver'   => 'sqlite',
