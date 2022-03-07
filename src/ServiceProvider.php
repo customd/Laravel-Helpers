@@ -14,7 +14,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function boot()
     {
-        $this->registerEvents();
         $this->registerDbMacros();
         $this->registerStringMacros();
     }
@@ -23,14 +22,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
     }
 
-    protected function registerEvents()
-    {
-        foreach ($this->events as $event => $listeners) {
-            foreach (array_unique($listeners) as $listener) {
-                Event::listen($event, $listener);
-            }
-        }
-    }
+
 
     protected function registerDbMacros()
     {
