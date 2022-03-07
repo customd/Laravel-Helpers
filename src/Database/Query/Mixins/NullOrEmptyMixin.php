@@ -38,7 +38,7 @@ class NullOrEmptyMixin
     {
         return function (string $column) {
             /** @var \Illuminate\Database\Query\Builder $this */
-            return $this->orWhere(fn(Builder $builder) => $builder->where($column, '!=', '')->orWhereNotNull($column));
+            return $this->orWhere(fn(Builder $builder) => $builder->where($column, '!=', '')->whereNotNull($column));
         };
     }
 }
