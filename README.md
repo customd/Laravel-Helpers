@@ -1,7 +1,14 @@
+[![Latest Release](https://git.customd.com/composer/Laravel-Helpers/-/badges/release.svg)](https://git.customd.com/composer/Laravel-Helpers/-/releases)
+[![coverage report](https://git.customd.com/composer/Laravel-Helpers/badges/master/coverage.svg)](https://git.customd.com/composer/Laravel-Helpers/-/commits/master)
+[![Github Issues](https://img.shields.io/github/issues/customd/laravel-helpers)](https://github.com/customd/Laravel-Helpers/issue)
+[![For Laravel 5](https://img.shields.io/badge/Laravel-8%20/%209-red.svg)](https://github.com/phpsa/laravel-api-controller/issues)
+<a href="https://packagist.org/packages/custom-d/laravel-helpers"><img src="https://img.shields.io/packagist/dt/custom-d/laravel-helpers" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/custom-d/laravel-helpers"><img src="https://img.shields.io/packagist/v/custom-d/laravel-helpers" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/custom-d/laravel-helpers"><img src="https://img.shields.io/packagist/l/custom-d/laravel-helpers" alt="License"></a>
+
 # Laravel Helpers <!-- no toc -->
 
 Collection of helpers for re-use accross a few of our projects
-
 
   - [Installation](#installation)
   - [Crud Policy Trait](#crud-policy-trait)
@@ -93,5 +100,3 @@ function related(){
 - [](https://github.com/custom-d/laravel-helpers)
 - [All contributors](https://github.com/custom-d/laravel-helpers/graphs/contributors)
 
-This package is bootstrapped with the help of
-[melihovv/laravel-package-generator](https://github.com/melihovv/laravel-package-generator).
