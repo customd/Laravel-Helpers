@@ -1,0 +1,26 @@
+include:
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - project: "custom-d/ci-templates"
+    file: "Semver.gitlab-ci.yml"
+
+stages:
+  - build
+  - test
+  - deploy # dummy stage to follow the template guidelines
+  - review
+  - dast
+  - staging
+  - canary
+  - production
+  - incremental rollout 10%
+  - incremental rollout 25%
+  - incremental rollout 50%
+  - incremental rollout 100%
+  - release
+  - performance
+  - cleanup
+
+code_quality:
+  artifacts:
+    paths: [gl-code-quality-report.json]
