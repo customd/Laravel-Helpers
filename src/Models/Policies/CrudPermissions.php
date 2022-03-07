@@ -39,7 +39,7 @@ trait CrudPermissions
      */
     public function viewAny(Authenticatable $user)
     {
-        return $this->can($user, 'list');
+        return $this->can($user, 'viewAny');
     }
 
     /**
