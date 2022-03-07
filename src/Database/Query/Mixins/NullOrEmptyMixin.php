@@ -2,6 +2,7 @@
 
 namespace CustomD\LaravelHelpers\Database\Query\Mixins;
 
+use Closure;
 use Illuminate\Database\Query\Builder;
 
 /** @mixin \Illuminate\Database\Query\Builder */
@@ -9,7 +10,7 @@ use Illuminate\Database\Query\Builder;
 class NullOrEmptyMixin
 {
 
-    public function whereNullOrEmpty()
+    public function whereNullOrEmpty(): Closure
     {
         return function (string $column) {
             /** @var \Illuminate\Database\Query\Builder $this */
@@ -17,7 +18,7 @@ class NullOrEmptyMixin
         };
     }
 
-    public function orWhereNullOrEmpty()
+    public function orWhereNullOrEmpty(): Closure
     {
         return function (string $column) {
             /** @var \Illuminate\Database\Query\Builder $this */
@@ -26,7 +27,7 @@ class NullOrEmptyMixin
     }
 
 
-    public function whereNotNullOrEmpty()
+    public function whereNotNullOrEmpty(): Closure
     {
         return function (string $column) {
             /** @var \Illuminate\Database\Query\Builder $this */
@@ -34,11 +35,11 @@ class NullOrEmptyMixin
         };
     }
 
-    public function orWhereNotNullOrEmpty()
+    public function orWhereNotNullOrEmpty(): Closure
     {
         return function (string $column) {
             /** @var \Illuminate\Database\Query\Builder $this */
-            return $this->orWhere(fn(Builder $builder) => $builder->where($column, '!=', '')->orWhereNotNull($column));
+            return $this->orWhere(fn(Builder $builder) => $builder->where($column, '!=', '')->whereNotNull($column));
         };
     }
 }

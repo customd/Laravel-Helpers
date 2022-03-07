@@ -7,6 +7,7 @@ use Mockery\MockInterface;
 use Orchestra\Testbench\TestCase;
 use CustomD\LaravelHelpers\ServiceProvider;
 use CustomD\LaravelHelpers\Facades\LaravelHelpers;
+use CustomD\LaravelHelpers\Tests\ExecutableAction;
 
 class LaravelHelpersTest extends TestCase
 {
@@ -51,7 +52,7 @@ class LaravelHelpersTest extends TestCase
             })
         );
 
-        execute(ExecutableAction::class, ['bar']);
+        execute(ExecutableAction::class, 'bar');
     }
 
     public function testExecuteHelperCallsActionWithOneArgAsArray()
@@ -68,7 +69,7 @@ class LaravelHelpersTest extends TestCase
             })
         );
 
-        execute(ExecutableAction::class, [$arg]);
+        execute(ExecutableAction::class, $arg);
     }
 
     public function testExecuteHelperCallsActionWithMultipleArgs()
@@ -84,7 +85,7 @@ class LaravelHelpersTest extends TestCase
             })
         );
 
-        execute(ExecutableAction::class, ['bar', 'car', 'bike']);
+        execute(ExecutableAction::class, 'bar', 'car', 'bike');
     }
 
 
@@ -104,6 +105,6 @@ class LaravelHelpersTest extends TestCase
             })
         );
 
-        execute(ExecutableAction::class, [$arrayArg, 'car', 'bike']);
+        execute(ExecutableAction::class, $arrayArg, 'car', 'bike');
     }
 }
