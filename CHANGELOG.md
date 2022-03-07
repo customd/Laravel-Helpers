@@ -1,3 +1,24 @@
+# [3.0.0](https://git.customd.com/composer/Laravel-Helpers/compare/v2.0.0...v3.0.0) (2022-03-07)
+
+
+### Bug Fixes
+
+* incorrect policy permission name ([9f000da](https://git.customd.com/composer/Laravel-Helpers/commit/9f000da3b4af432e81abd3c2a392e62f830f3930))
+* orwhereNotNullorEmpty returning false positives ([152d7af](https://git.customd.com/composer/Laravel-Helpers/commit/152d7afe820e4661188bde3dfe2f841e1364c7d8))
+
+
+### Features
+
+* Db Relationship orFail method and tests ([7330da6](https://git.customd.com/composer/Laravel-Helpers/commit/7330da6e7d063fe6447cb491d2b392882b257cbf))
+* removal of listener event and docs ([6fc3a73](https://git.customd.com/composer/Laravel-Helpers/commit/6fc3a7334731004a9faf78fd25bd31242fe35fd3))
+* Remove NotificationSendingListner in favour of core laravel ([bd2dcb6](https://git.customd.com/composer/Laravel-Helpers/commit/bd2dcb6fb910c3e63b18612ab13f35176fe549d5))
+
+
+### BREAKING CHANGES
+
+* permission should be viewAny and not list
+* https://laravel.com/docs/8.x/notifications#determining-if-the-queued-notification-should-be-sent in place of `blockSending` method on notification.
+
 # [2.0.0](https://github.com/customd/Laravel-Helpers/compare/v1.4.1...v2.0.0) (2021-10-08)
 
 
