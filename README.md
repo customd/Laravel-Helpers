@@ -47,12 +47,12 @@ class UserPolicy
 
 and it will check for the following permissions:
 
-- user.list
-- user.view
-- user.create
-- user.update
-- user.delete
-- user.restore
+- users.viewAny
+- users.view
+- users.create
+- users.update
+- users.delete
+- users.restore
 
 for user locked based policy permissions you can add the following method to your model:
 `userHasPermission(User $user): bool`
