@@ -1,4 +1,3 @@
-
 <?php
 namespace CustomD\LaravelHelpers\Http\Middleware;
 
@@ -14,7 +13,7 @@ class UserTimeZone {
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $this->setTimeZone($request);
         return $next($request);
@@ -24,17 +23,18 @@ class UserTimeZone {
      * sets the time zone from request or from the user setting
      * @param Illuminate\Http\Request $request
      */
-    public function setTimeZone($request)
+    public function setTimeZone(Request $request): void
     {
         if($this->user && $this->user->getAttribute('timezone') !== null)
         {
-            return Config::set('request.user.timezone', $this->user->getAttribute('timezone'));
+            Config::set('request.user.timezone', $this->user->getAttribute('timezone'));
+            return;
         }
 
-        return Config::set(
-            'request.user.timezone', 
+        Config::set(
+            'request.user.timezone',
             $request->header(
-                'x-timezone', 
+                'x-timezone',
                 Config::get('app.user_timezone', Config::get('app.timezone'))
             )
         );
