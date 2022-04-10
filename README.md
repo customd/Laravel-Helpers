@@ -26,6 +26,13 @@ Install via composer
 composer require custom-d/laravel-helpers
 ```
 
+## Upgrade V2 to V3
+
+ - ViewAny plicy now checks for a viewAny permission and not list for the viewAny permission check
+ - Dropped support for php 7.3 & 7.2
+ - Dropped support for Laravel 6 & 7
+ - marked execute helper as deprecated
+ - fixed Model::orWhereNotNullOrEmpty method to do correct query
 ## Crud Policy Trait
 
 by using the `CustomD\LaravelHelpers\Models\Policies\CrudPermissions` trait in your model policy along side Spatie role permissions using wildcard permissions
@@ -47,12 +54,12 @@ class UserPolicy
 
 and it will check for the following permissions:
 
-- users.viewAny
-- users.view
-- users.create
-- users.update
-- users.delete
-- users.restore
+- user.viewAny (list is v2 and earlier)
+- user.view
+- user.create
+- user.update
+- user.delete
+- user.restore
 
 for user locked based policy permissions you can add the following method to your model:
 `userHasPermission(User $user): bool`
@@ -71,7 +78,6 @@ $app->make(Action::class)->execute(...)
 
 If you discover any security related issues, please email
 instead of using the issue tracker.
-
 
 
 ## DB Macros
