@@ -2,9 +2,11 @@
 namespace CustomD\LaravelHelpers\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
-class UserTimeZone {
+class UserTimeZone
+{
 
     /**
      * Handle an incoming request.
@@ -21,13 +23,12 @@ class UserTimeZone {
 
     /**
      * sets the time zone from request or from the user setting
-     * @param Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      */
     public function setTimeZone(Request $request): void
     {
-        if($this->user && $this->user->getAttribute('timezone') !== null)
-        {
-            Config::set('request.user.timezone', $this->user->getAttribute('timezone'));
+        if ($request->user() && $request->user()->getAttribute('timezone') !== null) {
+            Config::set('request.user.timezone', $request->user()->getAttribute('timezone'));
             return;
         }
 
@@ -35,9 +36,8 @@ class UserTimeZone {
             'request.user.timezone',
             $request->header(
                 'x-timezone',
-                Config::get('app.user_timezone', Config::get('app.timezone'))
+                strval(Config::get('app.user_timezone', Config::get('app.timezone')))
             )
         );
-
     }
 }
