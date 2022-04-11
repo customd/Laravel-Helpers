@@ -1,3 +1,15 @@
+# [3.1.0](https://git.customd.com/composer/Laravel-Helpers/compare/v3.0.0...v3.1.0) (2022-04-11)
+
+
+### Bug Fixes
+
+* this instead of request ([c69fb57](https://git.customd.com/composer/Laravel-Helpers/commit/c69fb572479acc8af31f99d0125d88b712f9035a))
+
+
+### Features
+
+* set config based on users current timezone ([4a6e0f4](https://git.customd.com/composer/Laravel-Helpers/commit/4a6e0f45f65d59d8f0c5daf7b4657c8191f759a5))
+
 # [3.0.0](https://git.customd.com/composer/Laravel-Helpers/compare/v2.0.0...v3.0.0) (2022-03-07)
 
 
