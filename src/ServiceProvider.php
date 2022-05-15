@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use CustomD\LaravelHelpers\Database\Query\Mixins\NullOrEmptyMixin;
+use CustomD\LaravelHelpers\Console\Commands\MakeUserCommand;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -22,6 +23,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->registerDbMacros();
         $this->registerStringMacros();
+        $this->registerCommands();
     }
 
 
@@ -53,5 +55,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $chars = mb_str_split($string, 1, $encoding ?? mb_internal_encoding());
             return implode('', array_reverse($chars));
         });
+    }
+
+    protected function registerCommands()
+    {
+        $this->commands([
+           MakeUserCommand::class,
+        ]);
     }
 }
