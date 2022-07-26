@@ -18,6 +18,7 @@ if (! function_exists('execute')) {
 if (!function_exists('ddh')) {
     /**
      * dd() with headers
+     * @param mixed ...$vars
      * @return void
      */
     function ddh(...$vars){
@@ -33,6 +34,7 @@ if (!function_exists('ddh')) {
 if (!function_exists('dumph')) {
     /**
      * dumph() with headers
+     * @param mixed  ...$vars
      * @return void
      */
     function dumph(...$vars){
