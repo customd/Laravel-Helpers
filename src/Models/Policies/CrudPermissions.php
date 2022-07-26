@@ -16,10 +16,13 @@ trait CrudPermissions
             $action
         ])->filter()->implode(".");
 
-        if ($model && method_exists($model, 'userHasPermission') && ! $model->userHasPermission($user)) {
-            return false;
+        if ($model && method_exists($model, 'userHasPermission'))
+        {
+            info('Model::userHasPermission calls have been deprecated - and will be removed in the next version');
+            if(! $model->userHasPermission($user)) {
+                return false;
+            }
         }
-
         return $user->can($permission);
     }
 
