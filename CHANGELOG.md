@@ -1,3 +1,10 @@
+# [3.2.0](https://git.customd.com/composer/Laravel-Helpers/compare/v3.1.0...v3.2.0) (2022-07-26)
+
+
+### Features
+
+* ddh and dump helpers to do debugging  ([8fe681a](https://git.customd.com/composer/Laravel-Helpers/commit/8fe681a079eae2a8f91ebf2f8f73ff98f3fabd6b))
+
 # [3.1.0](https://git.customd.com/composer/Laravel-Helpers/compare/v3.0.0...v3.1.0) (2022-04-11)
 
 
