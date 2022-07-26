@@ -1,6 +1,6 @@
 <?php
 
-namespace namespace CustomD\LaravelHelpers\Traits;
+namespace CustomD\LaravelHelpers\Traits;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
