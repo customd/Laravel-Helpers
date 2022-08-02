@@ -8,9 +8,6 @@ use Spatie\Permission\PermissionRegistrar;
 
 trait SeedsPermissions
 {
-    /**
-     * @var array<string, \Spatie\Permission\Models\Role>
-     */
     protected static array $cachedRoles = [];
 
     public function run(): void
@@ -31,10 +28,15 @@ trait SeedsPermissions
 
     protected function seedPermissions(): void
     {
+        /**
+         * @var array<string, \Spatie\Permission\Models\Role>
+         */
+        $roles = [];
         foreach ($this->permissions as $permission => $roles) {
             $rolePermissions = Permission::firstOrCreate(['name' => $permission]);
             foreach ($roles as $roleName) {
-                $this->getRole($roleName)->givePermissionTo($rolePermissions);
+                $roles[$roleName] ??= $this->getRole($roleName);
+                $roles[$roleName]->givePermissionTo($rolePermissions);
             }
         }
     }
@@ -48,19 +50,14 @@ trait SeedsPermissions
 
     protected function getRole(string $roleName): Role
     {
-        if (! array_key_exists($roleName, static::$cachedRoles)) {
-            static::$cachedRoles[$roleName] = Role::firstOrCreate(['name' => $roleName]);
-        }
-        return static::$cachedRoles[$roleName];
+        return Role::firstOrCreate(['name' => $roleName]);
     }
 
     protected function seeding(): void
     {
-
     }
 
     protected function seeded(): void
     {
-
     }
 }
