@@ -1,3 +1,15 @@
+# [4.0.0](https://git.customd.com/composer/Laravel-Helpers/compare/v3.2.0...v4.0.0) (2022-08-15)
+
+
+### Features
+
+* Fixes policy parser to use correct name  ([92679f8](https://git.customd.com/composer/Laravel-Helpers/commit/92679f801c94cbc17c7b22f5b180102a2f106662))
+
+
+### BREAKING CHANGES
+
+* could break names using the existing broken behaviour
+
 # [3.2.0](https://git.customd.com/composer/Laravel-Helpers/compare/v3.1.0...v3.2.0) (2022-07-26)
 
 
