@@ -26,12 +26,13 @@ trait CrudPermissions
         return $user->can($permission);
     }
 
-    public static function parsePermissionNameFromPolicy()
+    public static function parsePermissionNameFromPolicy(): string
     {
-        $class = class_basename(get_called_class());
-        $class = Str::replaceLast('Policy', '', $class);
-        $class = Str::lower($class);
-        return Str::plural($class);
+        return Str::of(class_basename(get_called_class()))
+            ->replaceLast('Policy', '')
+            ->snake()
+            ->plural()
+            ->value;
     }
 
     /**
