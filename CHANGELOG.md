@@ -1,3 +1,10 @@
+# [4.1.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.0.0...v4.1.0) (2022-09-09)
+
+
+### Features
+
+* whereNullOrValue database mixin ([023551e](https://git.customd.com/composer/Laravel-Helpers/commit/023551eba8e5d2c4a8d4763824d5ed52c090870e))
+
 # [4.0.0](https://git.customd.com/composer/Laravel-Helpers/compare/v3.2.0...v4.0.0) (2022-08-15)
 
 
