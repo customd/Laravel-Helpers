@@ -46,10 +46,13 @@ class NullOrEmptyMixin
     public function whereNullOrValue(): Closure
     {
         /** @param $value mixed **/
-        return function (string $column, $value= null) {
+        return function (string $column, $operator = null, $value = null, $boolean = 'and') {
             /** @var \Illuminate\Database\Query\Builder $this */
-            return $this->where(fn (Builder $builder) => $builder->where($column, '=', $value)->orWhereNull($column));
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value, $operator, func_num_args() === 2
+            );
+
+            return $this->where(fn (Builder $builder) => $builder->whereNull($column)->when($value, fn($sbuilder) => $sbuilder->orWhere($column, $operator, $value, $boolean)));
         };
     }
-
 }
