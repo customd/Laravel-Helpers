@@ -90,7 +90,7 @@ Model::whereNullOrEmpty('column_name'); //generates select * where 1=1 and (colu
 Model::orWhereNullOrEmpty('column_name'); //generates select * where 1=1 or (column_name is null or column_name = '')
 Model::whereNotNullOrEmpty('column_name'); //generates select * where 1=1 and (column_name is not null and column_name != '')
 Model::orWhereNotNullOrEmpty('column_name'); //generates select * where 1=1 or (column_name is not null and column_name != '')
-Model::whereNullOrVallue('column_name', [$operator],$value, [$boolean]); to check if column null or specific value
+Model::whereNullOrValue('column_name', [$operator],$value, [$boolean]); to check if column null or specific value (follows laravel where specification where operator is optional)
 ```
 
 ### Enforced Non Nullable Relations (orFail chain)
