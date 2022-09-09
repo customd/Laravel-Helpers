@@ -1,3 +1,10 @@
+## [4.1.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.1.0...v4.1.1) (2022-09-09)
+
+
+### Bug Fixes
+
+* update whereNullOrValue method ([5c33df4](https://git.customd.com/composer/Laravel-Helpers/commit/5c33df408ba620809ae02d50e8b88ee753bfef77))
+
 # [4.1.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.0.0...v4.1.0) (2022-09-09)
 
 
