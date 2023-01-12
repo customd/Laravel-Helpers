@@ -102,6 +102,8 @@ function related(){
 ## String Macros
 `Str::reverse(string)` - to safely reverse a string that is multibyte safe.
 
+## Date Manipulation
+
 ## Credits
 
 - [](https://github.com/custom-d/laravel-helpers)
