@@ -7,10 +7,18 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use CustomD\LaravelHelpers\CdCarbonDate;
 use CustomD\LaravelHelpers\Database\Query\Mixins\NullOrEmptyMixin;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
+
+    public function register()
+    {
+        $this->app->bind('cd-carbon-date', function($app) {
+            return new CdCarbonDate();
+        });
+    }
 
 
     /**

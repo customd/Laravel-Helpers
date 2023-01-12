@@ -27,16 +27,16 @@ class UserTimeZone
      */
     public function setTimeZone(Request $request): void
     {
-        if ($request->user() && $request->user()->getAttribute('timezone') !== null) {
-            Config::set('request.user.timezone', $request->user()->getAttribute('timezone'));
-            return;
-        }
 
+        $requestedTimeZone = $request->header('X-Timezone');
+        $userTimezone = $request->user() ? $request->user()->timezone : null;
+
+        $timezone = $requestedTimeZone ?? $userTimezone ?? Config::get('app.user_timezone') ?? Config::get('app.timezone');
         Config::set(
             'request.user.timezone',
             $request->header(
                 'x-timezone',
-                strval(Config::get('app.user_timezone', Config::get('app.timezone')))
+                strval($timezone)
             )
         );
     }
