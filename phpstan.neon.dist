@@ -10,7 +10,7 @@ parameters:
     level: 9
 
     ignoreErrors:
-    #    - '#PHPDoc tag @var#'
+        - '#Call to protected static method this\(\) of class Carbon\\Carbon.#'
 
     excludePaths:
     #    - ./*/*/FileToBeExcluded.php
