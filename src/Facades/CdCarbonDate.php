@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Support\Carbon usersEndOfDay()
  * @method static \Illuminate\Support\Carbon toUsersTimezone()
  * @method static \Illuminate\Support\Carbon toSystemTimezone()
- * @method static \Illuminate\Support\Carbon parse($time = null, $tz = null)
  */
 class CdCarbonDate extends Facade
 {
