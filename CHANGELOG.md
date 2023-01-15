@@ -1,3 +1,11 @@
+# [4.2.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.1.1...v4.2.0) (2023-01-15)
+
+
+### Features
+
+* carbon extended ([8f10c6f](https://git.customd.com/composer/Laravel-Helpers/commit/8f10c6f602d347907158e59307f774f279360c44))
+* datetime wiht timezones handling ([bb8c26d](https://git.customd.com/composer/Laravel-Helpers/commit/bb8c26d57f7a77bc82b84ac04e09ac17eab3d3a9))
+
 ## [4.1.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.1.0...v4.1.1) (2022-09-09)
 
 
