@@ -1,13 +1,14 @@
 <?php
 
 if (! function_exists('execute')) {
+
     /**
-     * @param string $classname
+     * Undocumented function
+     *
+     * @param class-string $classname
      * @param mixed ...$args
      *
      * @return mixed
-     *
-     * @deprecated 07-03-2022 - should use laravel app(XXX::class) rather internally for better inline code
      */
     function execute(string $classname, ...$args):mixed
     {
@@ -15,13 +16,14 @@ if (! function_exists('execute')) {
     }
 }
 
-if (!function_exists('ddh')) {
+if (! function_exists('ddh')) {
     /**
      * dd() with headers
      * @param mixed ...$vars
      * @return void
      */
-    function ddh(...$vars){
+    function ddh(...$vars)
+    {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: *');
         header('Access-Control-Allow-Headers: *');
@@ -31,13 +33,14 @@ if (!function_exists('ddh')) {
     }
 }
 
-if (!function_exists('dumph')) {
+if (! function_exists('dumph')) {
     /**
      * dumph() with headers
      * @param mixed  ...$vars
      * @return void
      */
-    function dumph(...$vars){
+    function dumph(...$vars)
+    {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: *');
         header('Access-Control-Allow-Headers: *');
@@ -46,5 +49,3 @@ if (!function_exists('dumph')) {
         dump(...$vars);
     }
 }
-
-

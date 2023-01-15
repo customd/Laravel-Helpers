@@ -3,6 +3,7 @@ namespace CustomD\LaravelHelpers\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 
 class UserTimeZone
@@ -27,17 +28,19 @@ class UserTimeZone
      */
     public function setTimeZone(Request $request): void
     {
-        if ($request->user() && $request->user()->getAttribute('timezone') !== null) {
-            Config::set('request.user.timezone', $request->user()->getAttribute('timezone'));
-            return;
-        }
 
+        $requestedTimeZone = $request->header('X-Timezone');
+        $userTimezone = $request->user() ? $request->user()->timezone : null; // @phpstan-ignore-line - user timezone will be on the user record.
+
+        $timezone = $requestedTimeZone ?? $userTimezone ?? Config::get('app.user_timezone') ?? Config::get('app.timezone');
         Config::set(
             'request.user.timezone',
             $request->header(
                 'x-timezone',
-                strval(Config::get('app.user_timezone', Config::get('app.timezone')))
+                strval($timezone)
             )
         );
+
+        Carbon::setUserTimezone($timezone); //@phpstan-ignore-line -- this is a mixin on the library
     }
 }
