@@ -3,7 +3,7 @@ include:
     file: "php-packages.gitlab-ci.yml"
 
 variables:
-  TEST_PHP_8_2: "1"
-  TEST_PHP_8_1: "1"
-  TEST_PHP_8_0: "1"
-  TEST_PHP_7_4: "1"
+  TEST_PHP_8_2: "true"
+  TEST_PHP_8_1: "true"
+  TEST_PHP_8_0: "true"
+  TEST_PHP_7_4: "true"
