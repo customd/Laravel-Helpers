@@ -1,3 +1,10 @@
+# [4.3.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.2.0...v4.3.0) (2023-02-28)
+
+
+### Features
+
+* unit testing helper: randomTestingId() ([d14082d](https://git.customd.com/composer/Laravel-Helpers/commit/d14082dcd6643884e6bdb0797901df238b0f635f))
+
 # [4.2.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.1.1...v4.2.0) (2023-01-15)
 
 
