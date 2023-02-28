@@ -6,7 +6,6 @@ variables:
   TEST_PHP_8_2: "true"
   TEST_PHP_8_1: "true"
   TEST_PHP_8_0: "true"
-  TEST_PHP_7_4: "true"
 
 test:php:8-2:
   script:
@@ -22,5 +21,5 @@ test:php:8-2:
       else
         php vendor/bin/phpunit --exclude-group=special
       fi
-  image: "mileschou/xdebug:8.2"
-# chialab/php-dev
+  image: "chialab/php-dev:8.2"
+#
