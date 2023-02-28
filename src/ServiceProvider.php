@@ -37,7 +37,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         \Illuminate\Database\Eloquent\Factories\Factory::macro('randomTestingId', function ($min = 1000, $max = 1000000) {
             /** @var \Illuminate\Database\Eloquent\Factories\Factory $this*/
-            return \Illuminate\Support\Facades\App::runningUnitTests() ? $this->faker->unique()->numberBetween($min, $max) : null;
+            return \Illuminate\Support\Facades\App::runningUnitTests() ? $this->faker->unique()->numberBetween($min, $max) : null; //@phpstan-ignore-line
         });
     }
 
