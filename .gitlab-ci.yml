@@ -6,4 +6,20 @@ variables:
   TEST_PHP_8_2: "true"
   TEST_PHP_8_1: "true"
   TEST_PHP_8_0: "true"
-  TEST_PHP_7_4: "true"
+
+test:php:8-2:
+  script:
+    - XDEBUG_MODE=off
+    - composer install
+    - |
+      if [ -f artisan ]; then
+        php artisan test -p --exclude-group=special
+      elif [ -f vendor/bin/paratest ]; then
+        php vendor/bin/paratest --exclude-group=special
+      elif [ -f vendor/bin/pest ]; then
+        php vendor/bin/pest --exclude-group=special
+      else
+        php vendor/bin/phpunit --exclude-group=special
+      fi
+  image: "chialab/php-dev:8.2"
+#
