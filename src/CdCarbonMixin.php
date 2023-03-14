@@ -24,8 +24,9 @@ class CdCarbonMixin
     {
         $mixin = $this;
 
-        return static function (string $timezone) use ($mixin) {
+        return function (string $timezone) use ($mixin) {
             $mixin->userTimezone = $timezone;
+            return $this;
         };
     }
 
@@ -42,8 +43,9 @@ class CdCarbonMixin
     {
         $mixin = $this;
 
-        return static function (string $timezone) use ($mixin) {
+        return function (string $timezone) use ($mixin) {
             $mixin->systemTimezone = $timezone;
+            return $this;
         };
     }
 
@@ -180,7 +182,7 @@ class CdCarbonMixin
         return static function ($time) {
              /** @var Carbon $date */
             $date = self::this();
-            return self::parse($time, $date->getUserTimezone());
+            return $date->parse($time, $date->getUserTimezone());
         };
     }
 }

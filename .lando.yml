@@ -57,15 +57,37 @@ tooling:
       - composer phpstan
 
   all81:
-    service: appserver
+    service: php81
     cmd:
       - rm -rf vendor composer.lock && composer install
       - composer phpunit
       - composer phpstan
 
   all80:
-    service: appserver
+    service: php80
     cmd:
       - rm -rf vendor composer.lock && composer install
       - composer phpunit
       - composer phpstan
+
+  lara8:
+    service: php81
+    cmd:
+      - rm -rf vendor composer.lock
+      - composer require laravel/laravel:^8
+      - composer install
+      - composer phpunit
+      - composer phpstan
+      # this is for removing a specific version
+      - composer remove laravel/laravel
+
+  lara9:
+    service: php81
+    cmd:
+      - rm -rf vendor composer.lock
+      - composer require laravel/laravel:^9
+      - composer install
+      - composer phpunit
+      - composer phpstan
+      # this is for removing a specific version
+      - composer remove laravel/laravel
