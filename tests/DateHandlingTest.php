@@ -14,6 +14,7 @@ use CustomD\LaravelHelpers\ServiceProvider;
 use CustomD\LaravelHelpers\Facades\LaravelHelpers;
 use CustomD\LaravelHelpers\Http\Middleware\UserTimeZone;
 use CustomD\LaravelHelpers\Tests\ExecutableAction;
+use DateTime;
 use Illuminate\Support\Carbon as SupportCarbon;
 
 class DateHandlingTest extends TestCase
@@ -48,6 +49,20 @@ class DateHandlingTest extends TestCase
         $this->assertEquals("Sat Jan 07 2023 10:59:59 GMT+0000", Carbon::parseWithTz('2023-01-07 23:55:00')->usersEndOfDay()->toString());
         $this->assertEquals("Sat Dec 31 2022 11:00:00 GMT+0000", Carbon::parseWithTz('2023-01-01T02:04:00.000Z')->usersStartOfDay()->toString());
         $this->assertEquals("Fri Jan 06 2023 10:59:59 GMT+0000", now()->usersEndOfDay()->toString());
+        $this->assertEquals("Sun Jan 01 2023 11:00:00 GMT+0000", now()->usersStartOfWeek()->toString());
+        $this->assertEquals("Sat Dec 31 2022 11:00:00 GMT+0000", now()->usersStartOfWeek(Carbon::SUNDAY)->toString());
+        $this->assertEquals("Mon Jan 02 2023 00:00:00 GMT+1300", now()->usersStartOfWeek()->toUsersTimezone()->toString());
+        $this->assertEquals("Sun Jan 01 2023 00:00:00 GMT+1300", now()->usersStartOfWeek(Carbon::SUNDAY)->toUsersTimezone()->toString());
+        $this->assertEquals("2023-01-08T23:59:59+13:00", now()->usersEndOfWeek()->usersFormat('c'));
+        $this->assertEquals("Sun Jan 08 2023 10:59:59 GMT+0000", now()->usersEndOfWeek()->toString());
+        $this->assertEquals("Tue Jan 31 2023 10:59:59 GMT+0000", now()->usersEndOfMonth()->toString());
+        $this->assertEquals("Sat Dec 31 2022 11:00:00 GMT+0000", now()->usersStartOfMonth()->toString());
+        $this->assertEquals("Sunday, 01-Jan-2023 00:00:00 NZDT", now()->usersStartOfMonth()->usersFormat(DateTime::COOKIE));
+        $this->assertEquals("Sat Dec 31 2022 11:00:00 GMT+0000", now()->usersStartOfQuarter()->toString());
+        $this->assertEquals("Fri Mar 31 2023 10:59:59 GMT+0000", now()->usersEndOfQuarter()->toString());
+        $this->assertEquals("Sun Dec 31 2023 10:59:59 GMT+0000", now()->usersEndOfYear()->toString());
+        $this->assertEquals("Sat Dec 31 2022 11:00:00 GMT+0000", now()->usersStartOfYear()->toString());
+        $this->assertEquals("2023-01-01T00:00:00.000+13:00", now()->usersStartOfQuarter()->usersFormat(DateTime::RFC3339_EXTENDED));
 
         //make sure the factory returns a new instance each time
         $customdDate1 = CdCarbonDate::toUsersTimezone(now()->toString());

@@ -150,6 +150,8 @@ methods available:
 * `usersEndOfYear(): Static`
 * `parseWithTz(string $time): Static` - parses the time passed using the users timezone unless the timezone is in the timestamp
 
+You can also use the CDCarbonDate to create a few differnt date objects.
+
 ## Credits
 
 - [](https://github.com/custom-d/laravel-helpers)

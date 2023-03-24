@@ -185,4 +185,13 @@ class CdCarbonMixin
             return $date->parse($time, $date->getUserTimezone());
         };
     }
+
+    public function usersFormat(): Closure
+    {
+        return static function ($format) {
+            /** @var Carbon $date */
+            $date = self::this();
+            return $date->setTimezone($date->getUserTimezone())->format($format);
+        };
+    }
 }
