@@ -1,3 +1,10 @@
+# [4.4.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.3.0...v4.4.0) (2023-03-27)
+
+
+### Features
+
+* case insensitive where statement iWhere ([8aaccd4](https://git.customd.com/composer/Laravel-Helpers/commit/8aaccd4e802932d73c015756338091d5ca65fcf9))
+
 # [4.3.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.2.0...v4.3.0) (2023-02-28)
 
 
