@@ -77,6 +77,18 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             return $this->whereRaw("LOWER({$column}) {$operator} ?", [strtolower($value)], $boolean);
         });
+
+         /** @macro \Illuminate\Database\Query\Builder */
+        Builder::macro('orIWhere', function ($column, $operator = null, $value = null) {
+            /** @var \Illuminate\Database\Query\Builder $this */
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value,
+                $operator,
+                func_num_args() === 2
+            );
+
+            return $this->iWhere($column, $operator, $value, 'or');
+        });
     }
 
     protected function registerStringMacros(): void
