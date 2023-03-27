@@ -61,6 +61,22 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 );
             }
         );
+
+
+        Builder::macro('iWhere', function ($column, $operator = null, $value = null, $boolean = 'and') {
+            if (is_array($column)) {
+                return $this->addArrayOfWheres($column, $boolean, 'iWhere');
+            }
+
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value,
+                $operator,
+                func_num_args() === 2
+            );
+
+            return $this->whereRaw("LOWER({$column}) {$operator} ?", [strtolower($value)], $boolean);
+        });
+
     }
 
     protected function registerStringMacros(): void
