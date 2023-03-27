@@ -62,10 +62,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             }
         );
 
-
+         /** @macro \Illuminate\Database\Query\Builder */
         Builder::macro('iWhere', function ($column, $operator = null, $value = null, $boolean = 'and') {
+            /** @var \Illuminate\Database\Query\Builder $this */
             if (is_array($column)) {
-                return $this->addArrayOfWheres($column, $boolean, 'iWhere');
+                return $this->addArrayOfWheres($column, $boolean, 'iWhere'); //@phpstan-ignore-line
             }
 
             [$value, $operator] = $this->prepareValueAndOperator(
@@ -76,7 +77,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             return $this->whereRaw("LOWER({$column}) {$operator} ?", [strtolower($value)], $boolean);
         });
-
     }
 
     protected function registerStringMacros(): void
