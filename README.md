@@ -93,6 +93,13 @@ Model::orWhereNotNullOrEmpty('column_name'); //generates select * where 1=1 or (
 Model::whereNullOrValue('column_name', [$operator],$value, [$boolean]); to check if column null or specific value (follows laravel where specification where operator is optional)
 ```
 
+### Case insensitive statments
+```php
+Model::iWhere('col',$value);
+Model::iWhere('col',$operator,$value);
+Model::iWhere(['col' => $value]);
+```
+
 ### Enforced Non Nullable Relations (orFail chain)
 ```php
 function related(){
