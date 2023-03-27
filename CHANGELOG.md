@@ -1,3 +1,10 @@
+## [4.4.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.4.0...v4.4.1) (2023-03-27)
+
+
+### Bug Fixes
+
+* added orIWhere for the or statment ([8b4b06c](https://git.customd.com/composer/Laravel-Helpers/commit/8b4b06cbb386fbdbe4aaddec56fba95eca82bb71))
+
 # [4.4.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.3.0...v4.4.0) (2023-03-27)
 
 
