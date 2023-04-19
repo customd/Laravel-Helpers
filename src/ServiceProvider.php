@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 use CustomD\LaravelHelpers\CdCarbonDate;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -39,6 +40,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             /** @var \Illuminate\Database\Eloquent\Factories\Factory $this*/
             return \Illuminate\Support\Facades\App::runningUnitTests() ? $this->faker->unique()->numberBetween($min, $max) : null; //@phpstan-ignore-line
         });
+
+        Http::macro('enableRecording', fn() => $this->record());
     }
 
 
