@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Http;
 
 trait RecordsOrFakesHttpCalls
 {
-
     protected string $path = 'tests/stubs/';
 
     protected bool $record = false;
