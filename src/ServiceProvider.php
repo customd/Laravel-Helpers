@@ -41,7 +41,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return \Illuminate\Support\Facades\App::runningUnitTests() ? $this->faker->unique()->numberBetween($min, $max) : null; //@phpstan-ignore-line
         });
 
-        Http::macro('enableRecording', fn() => $this->record());
+        Http::macro('enableRecording', fn() => $this->record()); //@phpstan-ignore-line
     }
 
 
