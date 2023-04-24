@@ -1,3 +1,10 @@
+# [4.5.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.4.1...v4.5.0) (2023-04-24)
+
+
+### Features
+
+* trait to help with recording ([21a1fd1](https://git.customd.com/composer/Laravel-Helpers/commit/21a1fd12ee885d0de6415f130c7aa441b958313c))
+
 ## [4.4.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.4.0...v4.4.1) (2023-03-27)
 
 
