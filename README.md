@@ -10,14 +10,14 @@
 
 Collection of helpers for re-use accross a few of our projects
 
-- [Installation](#installation)
-- [Crud Policy Trait](#crud-policy-trait)
-- [Helpers](#helpers)
-- [Delayed notifications blocking:](#delayed-notifications-blocking)
-- [DB Macros](#db-macros)
-- [String Macros](#string-macros)
-- [Record or Fake HTTP Calls](#record-or-fake-http-calls)
-- [Credits](#credits)
+  - [Installation](#installation)
+  - [Crud Policy Trait](#crud-policy-trait)
+  - [Helpers](#helpers)
+  - [Delayed notifications blocking:](#delayed-notifications-blocking)
+  - [DB Macros](#db-macros)
+  - [String Macros](#string-macros)Record or Fake HTTP Calls
+  - [Record or Fake HTTP Calls](#record-or-fake-http-calls)
+  - [Credits](#credits)
 
 ## Installation
 
@@ -29,12 +29,11 @@ composer require custom-d/laravel-helpers
 
 ## Upgrade V2 to V3
 
-- ViewAny plicy now checks for a viewAny permission and not list for the viewAny permission check
-- Dropped support for php 7.3 & 7.2
-- Dropped support for Laravel 6 & 7
-- marked execute helper as deprecated
-- fixed Model::orWhereNotNullOrEmpty method to do correct query
-
+ - ViewAny plicy now checks for a viewAny permission and not list for the viewAny permission check
+ - Dropped support for php 7.3 & 7.2
+ - Dropped support for Laravel 6 & 7
+ - marked execute helper as deprecated
+ - fixed Model::orWhereNotNullOrEmpty method to do correct query
 ## Crud Policy Trait
 
 by using the `CustomD\LaravelHelpers\Models\Policies\CrudPermissions` trait in your model policy along side Spatie role permissions using wildcard permissions
@@ -81,10 +80,10 @@ $app->make(Action::class)->execute(...)
 If you discover any security related issues, please email
 instead of using the issue tracker.
 
+
 ## DB Macros
 
 ### Null Or Empty
-
 when dealing with some of our legacy databases we have some columns where the entry is either null or empty and these macros allow you to query this without the double entries:
 
 ```php
@@ -96,7 +95,6 @@ Model::whereNullOrValue('column_name', [$operator],$value, [$boolean]); to check
 ```
 
 ### Case insensitive statments
-
 ```php
 Model::iWhere('col',$value);
 Model::iWhere('col',$operator,$value);
@@ -104,43 +102,38 @@ Model::iWhere(['col' => $value]);
 ```
 
 ### Enforced Non Nullable Relations (orFail chain)
-
 ```php
 function related(){
   return $this->hasOne()->orFail();
 }
 ```
-
 ## String Macros
-
 `Str::reverse(string)` - to safely reverse a string that is multibyte safe.
 
 ## Date Manipulation
 
 You can set user timezones via the following options:
-
-1. optionally create a migration with
-
+1. optionally create a migration with:
 ```
 Schema::table('users', function (Blueprint $table) {
             $table->string('timezone', 40)->nullable();
         });
 ```
-
 2. in user model:
-
 ```
 pubic function timezone(): Attribute
 {
   return Attribute::get(fn($value) => $value ?? config('app.user_timezone'));
 }
-Additinoally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
+```
+
+Additionally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
+
 3. in your app config file add the `user_timezone` parameter.
 
 4. add the UserTimeZone middleware to your api middleware list.
 
 You can now access the current requests timezone via `config('request.user.timezone')`
-```
 
 ## Record or Fake HTTP Calls
 
@@ -168,3 +161,4 @@ Add the trait to your PHPUnit test file, ensure the `tests/stubs/` directory exi
 
 - [](https://github.com/custom-d/laravel-helpers)
 - [All contributors](https://github.com/custom-d/laravel-helpers/graphs/contributors)
+
