@@ -15,7 +15,8 @@ Collection of helpers for re-use accross a few of our projects
   - [Helpers](#helpers)
   - [Delayed notifications blocking:](#delayed-notifications-blocking)
   - [DB Macros](#db-macros)
-  - [String Macros](#string-macros)
+  - [String Macros](#string-macros)Record or Fake HTTP Calls
+  - [Record or Fake HTTP Calls](#record-or-fake-http-calls)
   - [Credits](#credits)
 
 ## Installation
@@ -112,7 +113,7 @@ function related(){
 ## Date Manipulation
 
 You can set user timezones via the following options:
-1. optionally create a migration with
+1. optionally create a migration with:
 ```
 Schema::table('users', function (Blueprint $table) {
             $table->string('timezone', 40)->nullable();
@@ -124,12 +125,37 @@ pubic function timezone(): Attribute
 {
   return Attribute::get(fn($value) => $value ?? config('app.user_timezone'));
 }
-Additinoally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
+```
+
+Additionally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
+
 3. in your app config file add the `user_timezone` parameter.
 
 4. add the UserTimeZone middleware to your api middleware list.
 
 You can now access the current requests timezone via `config('request.user.timezone')`
+
+## Record or Fake HTTP Calls
+
+The `RecordsOrFakesHttpCalls` trait will allow you to record or fake http calls in your tests. This is useful for testing external api calls without actually calling them.
+
+Add the trait to your PHPUnit test file, ensure the `tests/stubs/` directory exists, and then wrap your test code in a callable:
+
+```php
+  public function test_external_api()
+  {
+      // $this->record = true; // Toggle to create recorded files
+      $this->processRecordedTest(
+          'test_external_api',
+          function () {
+              // Any HTTP calls made by MyServiceClass will be recorded or returned from recorded responses, depending on `$this->record` above.
+              $result = resolve(MyServiceClass::class)->execute('foo');
+              $this->assertEquals('bar', $result->value);
+          },
+          'json'
+      );
+  }
+```
 
 ## Credits
 
