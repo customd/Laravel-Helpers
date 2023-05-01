@@ -1,3 +1,10 @@
+# [4.6.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.5.0...v4.6.0) (2023-05-01)
+
+
+### Features
+
+* **http-recording:** BREAKING: update recording to store http status and headers along side the body in a json file. Eliminates the need to pass a `type` but is not ([9f6e308](https://git.customd.com/composer/Laravel-Helpers/commit/9f6e30833f060438d62ae7a68a32dd4769423ce8))
+
 # [4.5.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.4.1...v4.5.0) (2023-04-24)
 
 
