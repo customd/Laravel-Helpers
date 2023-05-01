@@ -11,20 +11,19 @@ trait RecordsOrFakesHttpCalls
     protected bool $record = false;
 
 
-    protected function storeHttpRecordings(string $name, $type = 'html'): void
+    protected function storeHttpRecordings(string $name): void
     {
-        $recordings = Http::recorded();
+        $responses = $this->getRecordedResponses();
         $path = base_path($this->path);
 
-        foreach ($recordings as $i => $recording) {
-            /** @var \Illuminate\Http\Client\Response $response */
-            $response = $recording[1];
-            $file = $path . $i . '_' . $name . '.' . $type;
-            file_put_contents($file, $response->body());
+        foreach ($responses as $i => $response) {
+            $file = $path . $i . '_' . $name . '.json';
+            $json = json_encode($response, JSON_PRETTY_PRINT);
+            file_put_contents($file, $json);
         }
     }
 
-    protected function processRecordedTest(string $name, callable $callback, string $type = 'html'): void
+    protected function processRecordedTest(string $name, callable $callback): void
     {
         if ($this->record === true) {
             Http::enableRecording();
@@ -32,13 +31,20 @@ trait RecordsOrFakesHttpCalls
             Http::preventStrayRequests();
             $seq = Http::fakeSequence();
             $path = base_path($this->path);
-            collect(glob($path . '*_' . $name . '.' . $type))->map(fn($call) =>  $seq->push(file_get_contents($call), 200));
+            collect(glob($path . '*_' . $name . '.json'))->map(function ($responseFile) use ($seq) {
+                $response = json_decode(file_get_contents($responseFile), true);
+                $seq->push(
+                    $response['body'],
+                    $response['status'],
+                    $response['headers'],
+                );
+            });
         }
 
         $callback();
 
         if ($this->record === true) {
-            $this->storeHttpRecordings($name, $type);
+            $this->storeHttpRecordings($name);
         }
     }
 
