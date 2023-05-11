@@ -49,3 +49,21 @@ if (! function_exists('dumph')) {
         dump(...$vars);
     }
 }
+
+if(!function_exists(from_key_or_model))
+{
+    /**
+     * @template TType
+     * @param mixed $value
+     * @param class-string $type
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException 
+     * @return Illuminate\Database\Eloquent\Model|TType
+     */
+    function from_key_or_model(mixed $value, string $type)
+    {
+        if(is_a($var, $type)){
+            return $var;
+        }
+        return $type::whereKey($var)->firstOrFail();
+    }
+}
