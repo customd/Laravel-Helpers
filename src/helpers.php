@@ -61,9 +61,9 @@ if(!function_exists(from_key_or_model))
      */
     function from_key_or_model(mixed $value, string $type)
     {
-        if(is_a($var, $type)){
-            return $var;
+        if(is_a($value, $type)){
+            return $value;
         }
-        return $type::whereKey($var)->firstOrFail();
+        return $type::whereKey($value)->firstOrFail();
     }
 }
