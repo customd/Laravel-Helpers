@@ -28,7 +28,7 @@ trait RecordsOrFakesHttpCalls
         if ($this->record === true) {
             Http::enableRecording();
         } else {
-            if(app()->version() >= 9.12){\
+            if(app()->version() >= 9.12){
                 Http::preventStrayRequests();
             }
             $seq = Http::fakeSequence();
