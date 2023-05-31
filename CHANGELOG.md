@@ -1,3 +1,10 @@
+## [4.6.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.6.0...v4.6.1) (2023-05-31)
+
+
+### Bug Fixes
+
+* compatability with recordings for laravel prior to 9.12 ([b1a6f65](https://git.customd.com/composer/Laravel-Helpers/commit/b1a6f650d34c36e67daea43717d0e7987c2016d6))
+
 # [4.6.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.5.0...v4.6.0) (2023-05-01)
 
 
