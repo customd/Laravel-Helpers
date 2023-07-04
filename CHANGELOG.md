@@ -1,3 +1,10 @@
+# [4.7.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.6.1...v4.7.0) (2023-07-04)
+
+
+### Features
+
+* added Observerable trait to allow registration of observers in models based on naming convensions ([6080d43](https://git.customd.com/composer/Laravel-Helpers/commit/6080d433ae43559d2450f42c01591c2def09e870))
+
 ## [4.6.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.6.0...v4.6.1) (2023-05-31)
 
 
