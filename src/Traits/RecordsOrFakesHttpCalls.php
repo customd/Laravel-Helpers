@@ -28,7 +28,9 @@ trait RecordsOrFakesHttpCalls
         if ($this->record === true) {
             Http::enableRecording();
         } else {
-            Http::preventStrayRequests();
+            if(app()->version() >= 9.12){
+                Http::preventStrayRequests();
+            }
             $seq = Http::fakeSequence();
             $path = base_path($this->path);
             collect(glob($path . '*_' . $name . '.json'))->map(function ($responseFile) use ($seq) {

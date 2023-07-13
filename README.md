@@ -109,6 +109,15 @@ function related(){
 ## String Macros
 `Str::reverse(string)` - to safely reverse a string that is multibyte safe.
 
+## Observerable trait
+adding this trait to your models will automatically look for an observer in the app/Observers folder with the convension {model}Observer as the classname,
+
+you can additionally/optionally add 
+```php
+protected static $observers = [ ...arrayOfObservers]
+``` 
+to add a additional ones if needed
+
 ## Date Manipulation
 
 You can set user timezones via the following options:
