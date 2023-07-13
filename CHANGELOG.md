@@ -1,3 +1,45 @@
+# [4.7.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.6.1...v4.7.0) (2023-07-04)
+
+
+### Features
+
+* added Observerable trait to allow registration of observers in models based on naming convensions ([6080d43](https://git.customd.com/composer/Laravel-Helpers/commit/6080d433ae43559d2450f42c01591c2def09e870))
+
+## [4.6.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.6.0...v4.6.1) (2023-05-31)
+
+
+### Bug Fixes
+
+* compatability with recordings for laravel prior to 9.12 ([b1a6f65](https://git.customd.com/composer/Laravel-Helpers/commit/b1a6f650d34c36e67daea43717d0e7987c2016d6))
+
+# [4.6.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.5.0...v4.6.0) (2023-05-01)
+
+
+### Features
+
+* **http-recording:** BREAKING: update recording to store http status and headers along side the body in a json file. Eliminates the need to pass a `type` but is not ([9f6e308](https://git.customd.com/composer/Laravel-Helpers/commit/9f6e30833f060438d62ae7a68a32dd4769423ce8))
+
+# [4.5.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.4.1...v4.5.0) (2023-04-24)
+
+
+### Features
+
+* trait to help with recording ([21a1fd1](https://git.customd.com/composer/Laravel-Helpers/commit/21a1fd12ee885d0de6415f130c7aa441b958313c))
+
+## [4.4.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.4.0...v4.4.1) (2023-03-27)
+
+
+### Bug Fixes
+
+* added orIWhere for the or statment ([8b4b06c](https://git.customd.com/composer/Laravel-Helpers/commit/8b4b06cbb386fbdbe4aaddec56fba95eca82bb71))
+
+# [4.4.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.3.0...v4.4.0) (2023-03-27)
+
+
+### Features
+
+* case insensitive where statement iWhere ([8aaccd4](https://git.customd.com/composer/Laravel-Helpers/commit/8aaccd4e802932d73c015756338091d5ca65fcf9))
+
 # [4.3.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.2.0...v4.3.0) (2023-02-28)
 
 

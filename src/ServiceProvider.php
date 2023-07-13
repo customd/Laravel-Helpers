@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 use CustomD\LaravelHelpers\CdCarbonDate;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -39,6 +40,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             /** @var \Illuminate\Database\Eloquent\Factories\Factory $this*/
             return \Illuminate\Support\Facades\App::runningUnitTests() ? $this->faker->unique()->numberBetween($min, $max) : null; //@phpstan-ignore-line
         });
+
+        Http::macro('enableRecording', fn() => $this->record()); //@phpstan-ignore-line
     }
 
 
@@ -61,6 +64,34 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 );
             }
         );
+
+         /** @macro \Illuminate\Database\Query\Builder */
+        Builder::macro('iWhere', function ($column, $operator = null, $value = null, $boolean = 'and') {
+            /** @var \Illuminate\Database\Query\Builder $this */
+            if (is_array($column)) {
+                return $this->addArrayOfWheres($column, $boolean, 'iWhere'); //@phpstan-ignore-line
+            }
+
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value,
+                $operator,
+                func_num_args() === 2
+            );
+
+            return $this->whereRaw("LOWER({$column}) {$operator} ?", [strtolower($value)], $boolean);
+        });
+
+         /** @macro \Illuminate\Database\Query\Builder */
+        Builder::macro('orIWhere', function ($column, $operator = null, $value = null) {
+            /** @var \Illuminate\Database\Query\Builder $this */
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value,
+                $operator,
+                func_num_args() === 2
+            );
+
+            return $this->iWhere($column, $operator, $value, 'or');
+        });
     }
 
     protected function registerStringMacros(): void

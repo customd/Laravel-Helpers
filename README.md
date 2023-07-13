@@ -98,6 +98,13 @@ Model::orWhereNotNullOrEmpty('column_name'); //generates select * where 1=1 or (
 Model::whereNullOrValue('column_name', [$operator],$value, [$boolean]); to check if column null or specific value (follows laravel where specification where operator is optional)
 ```
 
+### Case insensitive statments
+```php
+Model::iWhere('col',$value);
+Model::iWhere('col',$operator,$value);
+Model::iWhere(['col' => $value]);
+```
+
 ### Enforced Non Nullable Relations (orFail chain)
 ```php
 function related(){
@@ -106,6 +113,15 @@ function related(){
 ```
 ## String Macros
 `Str::reverse(string)` - to safely reverse a string that is multibyte safe.
+
+## Observerable trait
+adding this trait to your models will automatically look for an observer in the app/Observers folder with the convension {model}Observer as the classname,
+
+you can additionally/optionally add 
+```php
+protected static $observers = [ ...arrayOfObservers]
+``` 
+to add a additional ones if needed
 
 ## Date Manipulation
 

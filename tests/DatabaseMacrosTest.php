@@ -63,6 +63,16 @@ class DatabaseMacrosTest extends TestCase
         $this->assertStringContainsString('or ("age" != ? and "age" is not null)', $query->toSql());
     }
 
+    public function test_case_insensitive_iwhere()
+    {
+        $query = ModelOne::iWhere('name', 'TestCom')->iWhere(['company' => 'my-comPanbyName'])->orIWhere('country', '!=', 'Nz');
+        $this->assertStringContainsString('LOWER(name) = ?', $query->toSql());
+        $this->assertStringContainsString('or LOWER(country) != ?', $query->toSql());
+        $this->assertStringContainsString('LOWER(company) = ?', $query->toSql());
+
+        $this->assertEquals(['testcom','my-companbyname','nz'], $query->getBindings());
+    }
+
     public function test_has_one_nullable()
     {
 
