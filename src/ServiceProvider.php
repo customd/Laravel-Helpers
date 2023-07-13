@@ -4,6 +4,7 @@ namespace CustomD\LaravelHelpers;
 
 use Closure;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +20,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register()
     {
-        $this->app->bind('cd-carbon-date', function ($app) {
-            return new CdCarbonDate();
-        });
+
         Carbon::mixin(new CdCarbonMixin());
+        CarbonImmutable::mixin(new CdCarbonMixin());
     }
 
 

@@ -10,12 +10,17 @@
 
 Collection of helpers for re-use accross a few of our projects
 
+- [Laravel Helpers ](#laravel-helpers-)
   - [Installation](#installation)
+  - [Upgrade V2 to V3](#upgrade-v2-to-v3)
   - [Crud Policy Trait](#crud-policy-trait)
   - [Helpers](#helpers)
-  - [Delayed notifications blocking:](#delayed-notifications-blocking)
   - [DB Macros](#db-macros)
+    - [Null Or Empty](#null-or-empty)
+    - [Enforced Non Nullable Relations (orFail chain)](#enforced-non-nullable-relations-orfail-chain)
   - [String Macros](#string-macros)
+  - [Date Manipulation](#date-manipulation)
+    - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
   - [Credits](#credits)
 
 ## Installation
@@ -139,6 +144,29 @@ Additinoally you can set defaults on the timezone via the attributes method or a
 4. add the UserTimeZone middleware to your api middleware list.
 
 You can now access the current requests timezone via `config('request.user.timezone')`
+
+### Date(Carbon) Helpers attached to above:
+methods available:
+
+* `setUserTimezone(string $timezone) : Static` - sets the users timezone (default set by helper)
+* `getUserTimezone() : string` - gets current users timezone
+* `setSystemTimezone(string $timezone) : Static` - sets system timezone (Default app.timezone)
+* `getSystemTimezone(): string` - gets teh current timezone
+* `toUsersTimezone(): Static` - returns carbon instance set to users timezone
+* `toSystemTimezone(): Static` - returns carbon instance set to system timezone
+* `usersStartOfDay(): Static` - returns carbon instance set to start of users day (converts to users timezone => start of day => to systemtime)
+* `usersEndOfDay(): Static` - users end of day
+* `usersStartOfWeek(): Static`
+* `usersEndOfWeek(): Static`
+* `usersStartOfMonth(): Static`
+* `usersEndOfMonth(): Static`
+* `usersStartOfQuarter(): Static`
+* `usersEndOfQuarter(): Static`
+* `usersStartOfYear(): Static`
+* `usersEndOfYear(): Static`
+* `parseWithTz(string $time): Static` - parses the time passed using the users timezone unless the timezone is in the timestamp
+
+You can also use the CDCarbonDate to create a few differnt date objects.
 
 ## Credits
 
