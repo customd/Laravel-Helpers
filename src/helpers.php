@@ -50,7 +50,7 @@ if (! function_exists('dumph')) {
     }
 }
 
-if(!function_exists(from_key_or_model))
+if(!function_exists('from_key_or_model'))
 {
     /**
      * @template TType
