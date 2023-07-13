@@ -21,8 +21,7 @@ class CdCarbonDate
 
         $this->carbon = (new CarbonImmutable());
 
-        $this->carbon->setUserTimezone(strval($this->userTimezone))
-        ->setSystemTimezone(strval($this->systemTimezone));
+        $this->carbon->setUserTimezone($this->userTimezone)->setSystemTimezone($this->systemTimezone);//@phpstan-ignore-line - timezone is string
     }
 
     /**
