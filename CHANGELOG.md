@@ -1,3 +1,18 @@
+# [4.8.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.7.0...v4.8.0) (2023-07-13)
+
+
+### Bug Fixes
+
+* added missing userFormat method ([70b3c1d](https://git.customd.com/composer/Laravel-Helpers/commit/70b3c1df7b156af32da2f6dd26a95fcd72e3f973))
+* stan ([631d09d](https://git.customd.com/composer/Laravel-Helpers/commit/631d09d65f7dd4fce7858498b4654ccd16bcf3dd))
+
+
+### Features
+
+* add from_key_or_model helper for laoding models from instances or primary key ([d561f03](https://git.customd.com/composer/Laravel-Helpers/commit/d561f03b798ca633d3f6c78d63e24dc634d6aa30))
+* enhanced date functionality ([cef9812](https://git.customd.com/composer/Laravel-Helpers/commit/cef981295ee19c9078ccbebbf4170e00bde15ba1))
+* **exception:** update extra type to string|array|null ([4fdd28c](https://git.customd.com/composer/Laravel-Helpers/commit/4fdd28c92e69811a0bfb80f0a67ab79046fa03da))
+
 # [4.7.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.6.1...v4.7.0) (2023-07-04)
 
 
