@@ -138,6 +138,8 @@ pubic function timezone(): Attribute
 {
   return Attribute::get(fn($value) => $value ?? config('app.user_timezone'));
 }
+```
+
 Additinoally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
 3. in your app config file add the `user_timezone` parameter.
 
