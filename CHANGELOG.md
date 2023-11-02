@@ -1,3 +1,10 @@
+# [4.9.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.8.0...v4.9.0) (2023-11-02)
+
+
+### Features
+
+* base repository pattern ([05957a8](https://git.customd.com/composer/Laravel-Helpers/commit/05957a8844354aadfc9ebe1395208870d55bac7f))
+
 # [4.8.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.7.0...v4.8.0) (2023-07-13)
 
 
