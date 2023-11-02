@@ -60,6 +60,58 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $res;
     }
 
+    /**
+     * Find multiple models by their primary keys.
+     *
+     * @param  \Illuminate\Contracts\Support\Arrayable<array-key, mixed>|array<mixed>  $ids
+     * @param  array<int, (model-property<TModelClass>|'*')>|model-property<TModelClass>|'*'  $columns
+     * @phpstan-return \Illuminate\Database\Eloquent\Collection<int, TModelClass>
+     */
+    public function findMany($ids, $columns = ['*'])
+    {
+        /** @var \Illuminate\Database\Eloquent\Collection<int, TModelClass> */
+        $res = $this->getModel()->findMany($ids, $columns);
+        return $res;
+    }
+
+    /**
+     * Find a model by its primary key or throw an exception.
+     *
+     * @param  mixed  $id
+     * @param  array<int, (model-property<TModelClass>|'*')>|model-property<TModelClass>|'*'  $columns
+     * @phpstan-return ($id is (\Illuminate\Contracts\Support\Arrayable<array-key, mixed>|array<mixed>) ? \Illuminate\Database\Eloquent\Collection<int, TModelClass> : TModelClass)
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function findOrFail($id, $columns = ['*'])
+    {
+        /** @var \Illuminate\Database\Eloquent\Collection<int, TModelClass>|TModelClass */
+        $res = $this->getModel()->findOrFail($id, $columns);
+        return $res;
+    }
+
+    /**
+     * @phpstan-param array<model-property<TModelClass>, mixed> $attributes
+     * @phpstan-return TModelClass
+     */
+    public function create(array $attributes = [])
+    {
+        /** @var TModelClass */
+        $res = $this->getModel()->create($attributes);
+        return $res;
+    }
+
+    /**
+     * @phpstan-param array<model-property<TModelClass>, mixed> $attributes
+     * @phpstan-return TModelClass
+     */
+    public function make(array $attributes = [])
+    {
+        /** @var TModelClass */
+        $res = $this->getModel()->make($attributes);
+        return $res;
+    }
+
 
     /** @phpstan-return TModelClass */
     public function getModel()
