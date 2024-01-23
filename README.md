@@ -170,6 +170,16 @@ methods available:
 
 You can also use the CDCarbonDate to create a few differnt date objects.
 
+### Larastan Stubs
+**these are temporary only till implemented by larastan**
+
+add to your phpstan.neon.dist file
+```yaml
+parameters:
+    stubFiles:
+        - ./vendor/custom-d/laravel-helpers/larastan/blank_filled.stub
+```
+
 ## Credits
 
 - [](https://github.com/custom-d/laravel-helpers)
