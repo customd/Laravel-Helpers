@@ -1,3 +1,10 @@
+## [4.9.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.9.0...v4.9.1) (2024-01-23)
+
+
+### Bug Fixes
+
+* larastan rule for blank / filled ([d8560d4](https://git.customd.com/composer/Laravel-Helpers/commit/d8560d4c39f520ca1b878b7d1530c8717b6de61b))
+
 # [4.9.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.8.0...v4.9.0) (2023-11-02)
 
 
