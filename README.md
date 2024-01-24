@@ -18,6 +18,7 @@ Collection of helpers for re-use accross a few of our projects
   - [DB Macros](#db-macros)
     - [Null Or Empty](#null-or-empty)
     - [Enforced Non Nullable Relations (orFail chain)](#enforced-non-nullable-relations-orfail-chain)
+  - [DB Repositories](#db-repositories)
   - [String Macros](#string-macros)
   - [Date Manipulation](#date-manipulation)
     - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
@@ -111,6 +112,12 @@ function related(){
   return $this->hasOne()->orFail();
 }
 ```
+
+## DB Repositories
+use of repositories via extending the `CustomD\LaravelHelpers\Repository\BaseRepository` abstract
+example in the [UserRepository.stub.php](https://git.customd.com/composer/Laravel-Helpers/-/blob/master/src/Repository/UserRepository.php.stub) file
+
+
 ## String Macros
 `Str::reverse(string)` - to safely reverse a string that is multibyte safe.
 

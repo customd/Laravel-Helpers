@@ -56,6 +56,13 @@ interface BaseRepositoryInterface
 
     /**
      * @phpstan-param array<model-property<TModelClass>, mixed> $attributes
+     * @phpstan-param array<model-property<TModelClass>, mixed> $values
+     * @phpstan-return TModelClass
+     */
+    public function firstOrCreate(array $attributes = [], array $values = []);
+
+    /**
+     * @phpstan-param array<model-property<TModelClass>, mixed> $attributes
      * @phpstan-return TModelClass
      */
     public function make(array $attributes = []);

@@ -103,6 +103,18 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * @phpstan-param array<model-property<TModelClass>, mixed> $attributes
+     * @phpstan-param array<model-property<TModelClass>, mixed> $values
+     * @phpstan-return TModelClass
+     */
+    public function firstOrCreate(array $attributes = [], array $values = [])
+    {
+        /** @var TModelClass */
+        $res = $this->getModel()->firstOrCreate($attributes, $values);
+        return $res;
+    }
+
+    /**
+     * @phpstan-param array<model-property<TModelClass>, mixed> $attributes
      * @phpstan-return TModelClass
      */
     public function make(array $attributes = [])
@@ -137,5 +149,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->model = app($modelClass);
 
         return $this;
+    }
+
+
+    public function __call($name, $arguments)
+    {
+        return $this->getModel()->$name(...$arguments);
     }
 }
