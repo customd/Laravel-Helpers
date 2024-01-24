@@ -1,3 +1,10 @@
+# [4.10.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.9.1...v4.10.0) (2024-01-24)
+
+
+### Features
+
+* added callable to the base repository to forward calls directly to the model ([60817d3](https://git.customd.com/composer/Laravel-Helpers/commit/60817d3d804ae4072b2e77b68acc75923b25ce6c))
+
 ## [4.9.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.9.0...v4.9.1) (2024-01-23)
 
 
