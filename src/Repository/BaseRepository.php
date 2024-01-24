@@ -152,6 +152,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
 
+    /**
+     * @param  array<int|string, mixed> $arguments
+     */
     public function __call(string $name, array $arguments): mixed
     {
         return $this->getModel()->$name(...$arguments);
