@@ -61,7 +61,7 @@ trait DebuggableExceptionTrait
             'message'    => $e->getMessage(),
             'debug_data' => $e->getDebugData(),
             'exception'  => get_class($e),
-            'previous'   => $e->getPrevious() ? [
+            'previous'   => $e->getPrevious() instanceof \Throwable ? [
                 get_class($e->getPrevious()) => $e->getPrevious()->getMessage(),
                 'trace'                      => array_slice($e->getPrevious()->getTrace(), 0, 3)
             ] : null,
