@@ -47,7 +47,7 @@ abstract class ValueObject implements Arrayable
         /** @var array<string, mixed> */
         $data = $onlyValidated ? $request->validated() : $request->all();
 
-        $args = collect($data)->only(static::getConstuctorArgs())->toArray();
+        $args = collect($data)->only(static::getConstructorArgs())->toArray();
 
         return new static(...$args); //@phpstan-ignore-line -- meant to be static
     }
@@ -56,7 +56,7 @@ abstract class ValueObject implements Arrayable
      *
      * @return Collection<int, string>
      */
-    protected static function getConstuctorArgs(): Collection
+    protected static function getConstructorArgs(): Collection
     {
         return collect((new ReflectionClass(static::class))->getConstructor()?->getParameters() ?? [])
             ->map(fn(ReflectionParameter $parameter) => $parameter->getName());
@@ -79,7 +79,7 @@ abstract class ValueObject implements Arrayable
 
     public function toArray(): array
     {
-        return static::getConstuctorArgs()
+        return static::getConstructorArgs()
             ->mapWithKeys(fn($property) => [$property => $this->{$property}])
             ->toArray();
     }
