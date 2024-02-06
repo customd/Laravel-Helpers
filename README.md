@@ -17,11 +17,15 @@ Collection of helpers for re-use accross a few of our projects
   - [Helpers](#helpers)
   - [DB Macros](#db-macros)
     - [Null Or Empty](#null-or-empty)
+    - [Case insensitive statments](#case-insensitive-statments)
     - [Enforced Non Nullable Relations (orFail chain)](#enforced-non-nullable-relations-orfail-chain)
   - [DB Repositories](#db-repositories)
   - [String Macros](#string-macros)
+  - [Observerable trait](#observerable-trait)
   - [Date Manipulation](#date-manipulation)
     - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
+    - [Value Objects](#value-objects)
+    - [Larastan Stubs](#larastan-stubs)
   - [Credits](#credits)
 
 ## Installation
@@ -124,10 +128,10 @@ example in the [UserRepository.stub.php](https://git.customd.com/composer/Larave
 ## Observerable trait
 adding this trait to your models will automatically look for an observer in the app/Observers folder with the convension {model}Observer as the classname,
 
-you can additionally/optionally add 
+you can additionally/optionally add
 ```php
 protected static $observers = [ ...arrayOfObservers]
-``` 
+```
 to add a additional ones if needed
 
 ## Date Manipulation
@@ -177,6 +181,40 @@ methods available:
 
 You can also use the CDCarbonDate to create a few differnt date objects.
 
+### Value Objects
+Example:
+```php
+<?php
+declare(strict_types=1);
+
+namespace CustomD\LaravelHelpers\Tests\ValueObjects;
+
+use CustomD\LaravelHelpers\ValueObjects\ValueObject;
+
+class SimpleValue extends ValueObject
+{
+    protected function __construct(
+        readonly public string $value,
+        readonly public int $count = 0
+    ) {
+    }
+
+  /** optionally add some validation rules, leave out the method if the type sets are enough **/
+    public function rules(): array
+    {
+        return [
+          'value' => ['string', 'max:250'],
+          'count' => ['max:99'],
+        ];
+    }
+}
+
+$simpleValue = SimpleValue::make(value: 'hello World', count: 33);
+
+```
+
+Best practice is to use the make option, which will validate, if you use a public constructor it will not.
+
 ### Larastan Stubs
 **these are temporary only till implemented by larastan**
 
@@ -191,4 +229,3 @@ parameters:
 
 - [](https://github.com/custom-d/laravel-helpers)
 - [All contributors](https://github.com/custom-d/laravel-helpers/graphs/contributors)
-
