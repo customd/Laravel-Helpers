@@ -225,6 +225,12 @@ parameters:
         - ./vendor/custom-d/laravel-helpers/larastan/blank_filled.stub
 ```
 
+### Filament Plugin
+** this is only if you want to deal with user timezones for display, else will be in UTC in the Filament panel **
+
+simply add to your panelProvider
+`->plugin(UserTimeZonePlugin::make())`
+
 ## Credits
 
 - [](https://github.com/custom-d/laravel-helpers)
