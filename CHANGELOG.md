@@ -1,3 +1,10 @@
+# [4.12.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.11.0...v4.12.0) (2024-02-11)
+
+
+### Features
+
+* Filament Timezone Control on input ([7327a27](https://git.customd.com/composer/Laravel-Helpers/commit/7327a27c6965de79360507534992bd116912daba))
+
 # [4.11.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.10.0...v4.11.0) (2024-02-06)
 
 
