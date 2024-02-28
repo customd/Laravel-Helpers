@@ -1,3 +1,10 @@
+# [4.13.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.12.0...v4.13.0) (2024-02-28)
+
+
+### Features
+
+* advanced attriburtes on value objects ([6e5130d](https://git.customd.com/composer/Laravel-Helpers/commit/6e5130d01fa1519fd070c822a11b4ed3d8c5b7ab))
+
 # [4.12.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.11.0...v4.12.0) (2024-02-11)
 
 
