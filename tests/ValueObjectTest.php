@@ -53,14 +53,15 @@ class ValueObjectTest extends TestCase
     public function test_a_complex_value()
     {
         $data = [
-            'value'       => 'test',
-            'address'     => [
+            'value'        => 'test',
+            'address'      => [
                 'street' => '123 Fake St'
             ],
-            'simpleValue' => SimpleValue::make(
+            'simpleValue'  => SimpleValue::make(
                 'test',
                 11
-            )
+            ),
+            'simpleValues' => collect()
         ];
         $value = ComplexValue::make(...$data);
         $this->assertEquals('test', $value->value);
@@ -71,18 +72,28 @@ class ValueObjectTest extends TestCase
     public function test_a_complex_value_construct()
     {
         $data = [
-            'value'       => 'test',
-            'simpleValue' => SimpleValue::make(...[
-                'count' => 11,
+            'value'         => 'test',
+            'simpleValue'   => [
+                'count' => '11',
                 'value' => 'test',
-            ]),
-            'address'     => [
+            ],
+            'address'       => [
                 'street' => '123 Fake St'
             ],
+            'constructable' => ['a' => 'b', 'c' => 'd', 'this' => 'is_array'],
+            'simpleValues'  => [
+                ['value' => 'test', 'count' => 11],
+                ['value' => 'test2', 'count' => 13],
+                ['value' => 'test3', 'count' => 15],
+            ]
         ];
         $value = ComplexValue::make(...$data);
         $this->assertEquals('test', $value->value);
         $this->assertEquals(11, $value->simpleValue->count);
         $this->assertEquals('123 Fake St', $value->address['street']);
+        $this->assertTrue($value->constructable instanceof \CustomD\LaravelHelpers\Tests\ValueObjects\Constructable);
+        $this->assertTrue($value->simpleValues instanceof \Illuminate\Support\Collection);
+        $this->assertSame(3, $value->simpleValues->count());
+        $this->assertSame('test', $value->simpleValues->first()->value);
     }
 }

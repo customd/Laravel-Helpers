@@ -24,8 +24,9 @@ Collection of helpers for re-use accross a few of our projects
   - [Observerable trait](#observerable-trait)
   - [Date Manipulation](#date-manipulation)
     - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
-    - [Value Objects](#value-objects)
-    - [Larastan Stubs](#larastan-stubs)
+  - [Value Objects](#value-objects)
+  - [Larastan Stubs](#larastan-stubs)
+  - [Filament Plugin](#filament-plugin)
   - [Credits](#credits)
 
 ## Installation
@@ -181,7 +182,7 @@ methods available:
 
 You can also use the CDCarbonDate to create a few differnt date objects.
 
-### Value Objects
+## Value Objects
 Example:
 ```php
 <?php
@@ -212,10 +213,40 @@ class SimpleValue extends ValueObject
 $simpleValue = SimpleValue::make(value: 'hello World', count: 33);
 
 ```
+Or using attributes to make advanced objects.
+```php
+<?php
+declare(strict_types=1);
+
+namespace CustomD\LaravelHelpers\Tests\ValueObjects;
+
+use Illuminate\Support\Collection;
+use CustomD\LaravelHelpers\ValueObjects\ValueObject;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
+
+class ComplexValue extends ValueObject
+{
+    public function __construct(
+        #[ChildValueObject(StringValue::class)]
+        readonly public StringValue $value,
+        readonly public array $address,
+        #[ChildValueObject(SimpleValue::class)]
+        readonly public SimpleValue $simpleValue,
+        #[MakeableObject(Constructable::class)]
+        readonly public ?Constructable $constructable = null,
+        #[CollectableValue(SimpleValue::class)]
+        readonly ?Collection $simpleValues = null,
+    ) {
+    }
+
+}
+```
 
 Best practice is to use the make option, which will validate, if you use a public constructor it will not.
 
-### Larastan Stubs
+## Larastan Stubs
 **these are temporary only till implemented by larastan**
 
 add to your phpstan.neon.dist file
@@ -225,7 +256,7 @@ parameters:
         - ./vendor/custom-d/laravel-helpers/larastan/blank_filled.stub
 ```
 
-### Filament Plugin
+## Filament Plugin
 ** this is only if you want to deal with user timezones for display, else will be in UTC in the Filament panel **
 
 simply add to your panelProvider
