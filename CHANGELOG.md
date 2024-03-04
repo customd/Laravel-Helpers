@@ -1,3 +1,10 @@
+## [4.13.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.13.0...v4.13.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* adds toJsonResource to valueObjects ([7e8af8d](https://git.customd.com/composer/Laravel-Helpers/commit/7e8af8df7ceabac2ecd987e68ff1642c89fcc2de))
+
 # [4.13.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.12.0...v4.13.0) (2024-02-28)
 
 
