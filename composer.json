@@ -24,6 +24,7 @@
   },
   "require-dev": {
     "filament/filament": "^3.2",
+    "phpsa/laravel-api-controller": "*",
     "nunomaduro/larastan": "^1.0|^2.0",
     "orchestra/testbench": "^7.0|^8.0|^9.0",
     "phpunit/phpunit": "^9.0|^10.0"

@@ -1,16 +1,16 @@
 <?php
 namespace CustomD\LaravelHelpers\ValueObjects;
 
+use ReflectionClass;
+use ReflectionParameter;
+use Illuminate\Support\Collection;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
-use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Support\Arrayable;
-use ReflectionClass;
-use Illuminate\Support\Collection;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
-use ReflectionParameter;
 
 /**
  * @implements Arrayable<string,mixed>
@@ -92,10 +92,23 @@ abstract class ValueObject implements Arrayable
      */
     public function toArray(): array
     {
+
         return static::getConstructorArgs()
             ->map(fn(ReflectionParameter $parameter) => $parameter->getName())
             ->mapWithKeys(fn($property) => [$property => $this->{$property}])
             ->toArray();
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
+    }
+
+
+    public function toJsonResource(?string $resource = null): JsonResource
+    {
+        $resource ??= JsonResource::class;
+        return $resource::make($this->toArray());
     }
 
 

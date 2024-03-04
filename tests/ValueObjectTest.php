@@ -5,6 +5,8 @@ use Orchestra\Testbench\TestCase;
 use CustomD\LaravelHelpers\Tests\ValueObjects\SimpleValue;
 use CustomD\LaravelHelpers\Tests\ValueObjects\ComplexValue;
 use CustomD\LaravelHelpers\Tests\ValueObjects\SimpleValueFormRequest;
+use Illuminate\Http\Request;
+use Phpsa\LaravelApiController\Http\Resources\ApiResource;
 
 class ValueObjectTest extends TestCase
 {
@@ -95,5 +97,41 @@ class ValueObjectTest extends TestCase
         $this->assertTrue($value->simpleValues instanceof \Illuminate\Support\Collection);
         $this->assertSame(3, $value->simpleValues->count());
         $this->assertSame('test', $value->simpleValues->first()->value);
+        $this->assertTrue($value->simpleValues->first() instanceof \CustomD\LaravelHelpers\Tests\ValueObjects\SimpleValue);
+    }
+
+    public function testing_standard_resource_object()
+    {
+        $value = SimpleValue::make('test', 10);
+        $this->assertInstanceOf(SimpleValue::class, $value);
+
+        $this->assertSame(
+            json_encode(['data' => $value->toArray()]),
+            $value->toJsonResource()->toResponse(new Request())->content()
+        );
+    }
+
+    public function test_a_complex_value_construct_with_api_resource()
+    {
+        $data = [
+            'value'         => 'test',
+            'simpleValue'   => [
+                'count' => '11',
+                'value' => 'test',
+            ],
+            'address'       => [
+                'street' => '123 Fake St'
+            ],
+            'constructable' => ['a' => 'b', 'c' => 'd', 'this' => 'is_array'],
+            'simpleValues'  => [
+                ['value' => 'test', 'count' => 11],
+                ['value' => 'test2', 'count' => 13],
+                ['value' => 'test3', 'count' => 15],
+            ]
+        ];
+        $value = ComplexValue::make(...$data);
+
+        $res = json_decode($value->toJsonResource(ApiResource::class)->toResponse(new Request())->content(), true);
+        $this->assertIsArray($res['data']);
     }
 }

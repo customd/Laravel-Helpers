@@ -20,7 +20,7 @@ class ComplexValue extends ValueObject
         #[MakeableObject(Constructable::class)]
         readonly public ?Constructable $constructable = null,
         #[CollectableValue(SimpleValue::class)]
-        readonly ?Collection $simpleValues = null,
+        readonly public ?Collection $simpleValues = null,
     ) {
     }
 
