@@ -20,8 +20,7 @@ Collection of helpers for re-use accross a few of our projects
     - [Case insensitive statments](#case-insensitive-statments)
     - [Enforced Non Nullable Relations (orFail chain)](#enforced-non-nullable-relations-orfail-chain)
   - [DB Repositories](#db-repositories)
-  - [String Macros](#string-macros)
-  - [Observerable trait](#observerable-trait)
+  - [Observerable trait (Deprecated)](#observerable-trait-deprecated)
   - [Date Manipulation](#date-manipulation)
     - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
   - [Value Objects](#value-objects)
@@ -30,6 +29,7 @@ Collection of helpers for re-use accross a few of our projects
   - [Credits](#credits)
 
 ## Installation
+
 
 Install via composer
 
@@ -123,17 +123,27 @@ use of repositories via extending the `CustomD\LaravelHelpers\Repository\BaseRep
 example in the [UserRepository.stub.php](https://git.customd.com/composer/Laravel-Helpers/-/blob/master/src/Repository/UserRepository.php.stub) file
 
 
-## String Macros
-`Str::reverse(string)` - to safely reverse a string that is multibyte safe.
-
-## Observerable trait
+## Observerable trait (Deprecated)
 adding this trait to your models will automatically look for an observer in the app/Observers folder with the convension {model}Observer as the classname,
 
 you can additionally/optionally add
 ```php
 protected static $observers = [ ...arrayOfObservers]
 ```
-to add a additional ones if needed
+to add a additional ones if
+
+Replace this with
+```
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\UserObserver;
+
+#[ObservedBy(UserObserver::class)]
+#[ObservedBy(AnotherUserObserver::class)]
+class User extends Model
+{
+    //
+}
+```
 
 ## Date Manipulation
 
@@ -179,8 +189,9 @@ methods available:
 * `usersStartOfYear(): Static`
 * `usersEndOfYear(): Static`
 * `parseWithTz(string $time): Static` - parses the time passed using the users timezone unless the timezone is in the timestamp
+* `hasISOFormat(string $date): bool` - checks if the date is in iso format.
 
-You can also use the CDCarbonDate to create a few differnt date objects.
+You can also use the CDCarbonDate to create a few different date objects.
 
 ## Value Objects
 Example:
@@ -192,11 +203,11 @@ namespace CustomD\LaravelHelpers\Tests\ValueObjects;
 
 use CustomD\LaravelHelpers\ValueObjects\ValueObject;
 
-class SimpleValue extends ValueObject
+final readonly class SimpleValue extends ValueObject
 {
     protected function __construct(
-        readonly public string $value,
-        readonly public int $count = 0
+        public string $value,
+        public int $count = 0
     ) {
     }
 
@@ -226,7 +237,7 @@ use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
 
-class ComplexValue extends ValueObject
+final readonly class ComplexValue extends ValueObject
 {
     public function __construct(
         #[ChildValueObject(StringValue::class)]
@@ -245,6 +256,14 @@ class ComplexValue extends ValueObject
 ```
 
 Best practice is to use the make option, which will validate, if you use a public constructor it will not.
+
+These should all be marked as READONLY and FINAL.
+
+The attributes available are:
+* `ChildValueObject(valueobectclass)` - which will make a new valueObject
+* `CollectableValue(valueobjectclass)` - which will convert an array to a coollection of the value objects
+* `MakeableObject(class, [?$spread = false])` - will look for a make method or else construct if passed an non object - if spread is true will expand the array else will pass the array as a single argument
+
 
 ## Larastan Stubs
 **these are temporary only till implemented by larastan**

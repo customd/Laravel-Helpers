@@ -9,7 +9,7 @@ use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
 
-class ComplexValue extends ValueObject
+final readonly class ComplexValue extends ValueObject
 {
     public function __construct(
         #[ChildValueObject(StringValue::class)]

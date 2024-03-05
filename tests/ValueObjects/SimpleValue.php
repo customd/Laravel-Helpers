@@ -5,7 +5,7 @@ namespace CustomD\LaravelHelpers\Tests\ValueObjects;
 
 use CustomD\LaravelHelpers\ValueObjects\ValueObject;
 
-class SimpleValue extends ValueObject
+final readonly class SimpleValue extends ValueObject
 {
     public function __construct(
         readonly public string $value,
