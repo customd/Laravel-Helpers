@@ -2,25 +2,20 @@
 
 namespace CustomD\LaravelHelpers;
 
-use Closure;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Str;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
-use CustomD\LaravelHelpers\CdCarbonDate;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use CustomD\LaravelHelpers\Database\Query\Mixins\NullOrEmptyMixin;
-use CustomD\LaravelHelpers\Facades\CdCarbonDate as FacadesCdCarbonDate;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
 
     public function register()
     {
-
         Carbon::mixin(new CdCarbonMixin());
         CarbonImmutable::mixin(new CdCarbonMixin());
     }
@@ -34,14 +29,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->registerDbMacros();
-        $this->registerStringMacros();
 
         \Illuminate\Database\Eloquent\Factories\Factory::macro('randomTestingId', function ($min = 1000, $max = 1000000) {
             /** @var \Illuminate\Database\Eloquent\Factories\Factory $this*/
             return \Illuminate\Support\Facades\App::runningUnitTests() ? $this->faker->unique()->numberBetween($min, $max) : null; //@phpstan-ignore-line
         });
 
-        Http::macro('enableRecording', fn() => $this->record()); //@phpstan-ignore-line
+         /** @macro Http */
+        Http::macro('enableRecording', function () {
+            /** @var  \Illuminate\Http\Client\Factory $this*/
+            return $this->record(); //@phpstan-ignore-line
+        });
     }
 
 
@@ -64,42 +62,5 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 );
             }
         );
-
-         /** @macro \Illuminate\Database\Query\Builder */
-        Builder::macro('iWhere', function ($column, $operator = null, $value = null, $boolean = 'and') {
-            /** @var \Illuminate\Database\Query\Builder $this */
-            if (is_array($column)) {
-                return $this->addArrayOfWheres($column, $boolean, 'iWhere'); //@phpstan-ignore-line
-            }
-
-            [$value, $operator] = $this->prepareValueAndOperator(
-                $value,
-                $operator,
-                func_num_args() === 2
-            );
-
-            return $this->whereRaw("LOWER({$column}) {$operator} ?", [strtolower($value)], $boolean);
-        });
-
-         /** @macro \Illuminate\Database\Query\Builder */
-        Builder::macro('orIWhere', function ($column, $operator = null, $value = null) {
-            /** @var \Illuminate\Database\Query\Builder $this */
-            [$value, $operator] = $this->prepareValueAndOperator(
-                $value,
-                $operator,
-                func_num_args() === 2
-            );
-
-            return $this->iWhere($column, $operator, $value, 'or');
-        });
-    }
-
-    protected function registerStringMacros(): void
-    {
-        /** @macro \Illuminate\Support\Str */
-        Str::macro('reverse', function ($string, $encoding = null) {
-            $chars = mb_str_split($string, 1, $encoding ?? mb_internal_encoding());
-            return implode('', array_reverse($chars));
-        });
     }
 }
