@@ -1,3 +1,12 @@
+## [4.13.2](https://git.customd.com/composer/Laravel-Helpers/compare/v4.13.1...v4.13.2) (2024-03-13)
+
+
+### Bug Fixes
+
+* carbon mixin sets immutable timezone and has helper hasISOFormat(date) ([b58f040](https://git.customd.com/composer/Laravel-Helpers/commit/b58f040b890dc8475988a0dc0fad724dc51ef5ce))
+* deprecated ovservable trait - laravel has observable attribute now ([e3b0e3e](https://git.customd.com/composer/Laravel-Helpers/commit/e3b0e3efaea5ce65bda6be415714077f527ac2a1))
+* enanced crud permissions to be more flexable by using callable ([299515c](https://git.customd.com/composer/Laravel-Helpers/commit/299515cc5b7dcc76fd137867eca338c5f5dca704))
+
 ## [4.13.1](https://git.customd.com/composer/Laravel-Helpers/compare/v4.13.0...v4.13.1) (2024-03-04)
 
 
