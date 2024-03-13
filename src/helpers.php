@@ -50,20 +50,19 @@ if (! function_exists('dumph')) {
     }
 }
 
-if(!function_exists('from_key_or_model'))
-{
+if (! function_exists('from_key_or_model')) {
     /**
     * @template TType
     * @param string|int|\Illuminate\Database\Eloquent\Model $value
     * @param class-string<TType> $type
-    * @throws \Illuminate\Database\Eloquent\ModelNotFoundException 
+    * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
     * @return \Illuminate\Database\Eloquent\Model|TType
     */
-   function from_key_or_model(string|int|\Illuminate\Database\Eloquent\Model $value, string $type)
-   {
-       if(is_object($value) && is_a($value, $type)){
-           return $value;
-       }
-       return $type::whereKey($value)->firstOrFail();
-   }
+    function from_key_or_model(string|int|\Illuminate\Database\Eloquent\Model $value, string $type)
+    {
+        if (is_object($value) && is_a($value, $type)) {
+            return $value;
+        }
+        return $type::whereKey($value)->firstOrFail();
+    }
 }

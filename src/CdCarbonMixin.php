@@ -194,4 +194,9 @@ class CdCarbonMixin
             return $date->setTimezone($date->getUserTimezone())->format($format);
         };
     }
+
+    public function hasISOFormat(): callable
+    {
+        return static fn ($date): bool => Carbon::hasFormat($date, 'Y-m-d\TH:i:s.u\Z');
+    }
 }

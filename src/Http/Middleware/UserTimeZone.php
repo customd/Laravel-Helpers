@@ -1,6 +1,7 @@
 <?php
 namespace CustomD\LaravelHelpers\Http\Middleware;
 
+use Carbon\CarbonImmutable;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -42,5 +43,6 @@ class UserTimeZone
         );
 
         Carbon::setUserTimezone($timezone); //@phpstan-ignore-line -- this is a mixin on the library
+        CarbonImmutable::setUserTimezone($timezone); //@phpstan-ignore-line -- this is a mixin on the library
     }
 }

@@ -6,7 +6,7 @@ namespace CustomD\LaravelHelpers\Tests\ValueObjects;
 use CustomD\LaravelHelpers\ValueObjects\ValueObject;
 use Stringable;
 
-class StringValue extends ValueObject implements Stringable
+final readonly class StringValue extends ValueObject implements Stringable
 {
     public function __construct(
         readonly public string $value,

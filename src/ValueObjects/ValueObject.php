@@ -15,7 +15,7 @@ use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
 /**
  * @implements Arrayable<string,mixed>
  */
-abstract class ValueObject implements Arrayable
+abstract readonly class ValueObject implements Arrayable
 {
 
     /**
@@ -99,7 +99,7 @@ abstract class ValueObject implements Arrayable
             ->toArray();
     }
 
-    public function __toString()
+    public function toJsonString(): string
     {
         return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
     }

@@ -5,5 +5,5 @@ include:
 variables:
   TEST_PHP_8_3: "true"
   TEST_PHP_8_2: "true"
-  TEST_PHP_8_1: "true"
+  TEST_PHP_8_1: "false"
   TEST_PHP_8_0: "false"

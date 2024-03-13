@@ -2,6 +2,9 @@
 
 namespace CustomD\LaravelHelpers\Traits;
 
+/**
+ * @deprecated -- start using the attribute key
+ */
 trait Observerable
 {
 
