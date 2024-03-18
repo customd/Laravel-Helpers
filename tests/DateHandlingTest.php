@@ -83,8 +83,9 @@ class DateHandlingTest extends TestCase
         Carbon::setTestNow($nzDate);
 
         $custom = CdCarbonDate::setUserTimezone('Africa/Johannesburg');
+        //dd($custom->toUsersTimezone()->toString(), now()->toString(), now()->getUserTimezone());
 
-        $this->assertNotEquals(now()->toUsersTimezone()->toString(), $custom->toUsersTimezone(now())->toString());
+        $this->assertNotEquals(now()->toUsersTimezone()->toString(), $custom->toUsersTimezone()->toString());
     }
 
     public function testSetsViaMiddleware()
