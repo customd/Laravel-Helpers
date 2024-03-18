@@ -26,7 +26,7 @@ trait CanCallProtectedMethods
         $value = $property->getValue($object);
         $property->setAccessible(false);
 
-        return $value
+        return $value;
     }
 
     public static function callProtectedMethod($object, string $methodName, ...$params)
