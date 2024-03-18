@@ -1,3 +1,10 @@
+# [5.1.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.0.0...v5.1.0) (2024-03-18)
+
+
+### Features
+
+* trait to allow tests to call protectd methods / properties ([1a12672](https://git.customd.com/composer/Laravel-Helpers/commit/1a12672dd4273f2b64de4d1944c57178fb309354))
+
 ## [4.13.2](https://git.customd.com/composer/Laravel-Helpers/compare/v4.13.1...v4.13.2) (2024-03-13)
 
 
