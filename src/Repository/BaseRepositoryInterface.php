@@ -2,9 +2,10 @@
 
 namespace CustomD\LaravelHelpers\Repository;
 
+use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -15,6 +16,14 @@ interface BaseRepositoryInterface
     public function setModel(string $modelClass): BaseRepository;
 
     public function setRequest(Request $request): BaseRepository;
+
+    /**
+     *
+     * @param Closure $callback
+     * @param array<int, string>|string $scopes
+     * @return mixed
+     */
+    public function withoutScopes(Closure $callback, array|string $scopes = '*');
 
     /**
      * Find a model by its primary key.
