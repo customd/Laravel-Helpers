@@ -236,7 +236,9 @@ use CustomD\LaravelHelpers\ValueObjects\ValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\MapToCase;
 
+#[MapToCase('camel')]
 final readonly class ComplexValue extends ValueObject
 {
     public function __construct(
@@ -263,7 +265,20 @@ The attributes available are:
 * `ChildValueObject(valueobectclass)` - which will make a new valueObject
 * `CollectableValue(valueobjectclass)` - which will convert an array to a coollection of the value objects
 * `MakeableObject(class, [?$spread = false])` - will look for a make method or else construct if passed an non object - if spread is true will expand the array else will pass the array as a single argument
+* `MapToCase(('snake|camel|studly'))` - for the fromRequest method
 
+
+Mapping Valueobject from your Request would be as easy as doing one of the following:
+```php
+//eiterh in your code where you need it.
+$object = ValueObject::fromRequest($MyFormRequest, true|false); //defaults to true (validated only values, false will be all from the request);
+
+//or add a method to your FormRequest
+public function getObject(): ValueObject
+{
+  return ValueObject::fromRequest($this);
+}
+```
 
 ## Larastan Stubs
 **these are temporary only till implemented by larastan**
