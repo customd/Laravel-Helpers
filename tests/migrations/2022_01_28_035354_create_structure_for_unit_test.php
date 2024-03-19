@@ -16,6 +16,7 @@ class CreateStructureForUnitTest extends Migration
 
             Schema::create('model_ones', function (Blueprint $table) {
                 $table->id();
+                $table->string('name')->nullable();
                 $table->softDeletes();
                 $table->timestamps();
             });

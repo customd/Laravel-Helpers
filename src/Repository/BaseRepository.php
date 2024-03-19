@@ -2,12 +2,14 @@
 
 namespace CustomD\LaravelHelpers\Repository;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
- * @template TModelClass
+ * @template TModelClass of Model
  */
 abstract class BaseRepository implements BaseRepositoryInterface
 {
@@ -18,6 +20,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected $model;
 
     protected Request $request;
+
+    /**
+     *
+     * @var string|array<int, string>|null
+     */
+    public string|array|null $withoutScopes = null;
 
     /**
      * Default attributes to automatically except from request treatments.
@@ -44,6 +52,38 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->request = $request;
 
         return $this;
+    }
+
+    public function withoutScopes(Closure $callback, array|string $scopes = '*')
+    {
+        $this->withoutScopes = $scopes;
+        $result = $callback($this);
+        $this->withoutScopes = null;
+
+        return $result;
+    }
+
+
+    /**
+     * @phpstan-param \Illuminate\Database\Eloquent\Builder<TModelClass> $builder
+     * @phpstan-param string|array<int, string>|null $scopes
+     * @phpstan-return \Illuminate\Database\Eloquent\Builder<TModelClass>
+     * @return \Illuminate\Database\Eloquent\Builder<TModelClass>
+    */
+    protected function handleWithoutScopes(Builder $builder, string|array|null $scopes): Builder
+    {
+        if ($scopes === null) {
+            return $builder;
+        }
+        if ($scopes === '*' || $scopes === ['*']) {
+            return $builder->withoutGlobalScopes();
+        }
+
+        foreach ((array) $scopes as $scope) {
+            $builder->withoutGlobalScope($scope);
+        }
+
+        return $builder;
     }
 
     /**
@@ -125,11 +165,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
 
-    /** @phpstan-return TModelClass */
+    /** @phpstan-return \Illuminate\Database\Eloquent\Builder<TModelClass> */
     public function getModel()
     {
         if ($this->model instanceof Model) {
-            return $this->model;
+            return $this->model->newQuery()->when(filled($this->withoutScopes), function (Builder $query) {
+                return $this->handleWithoutScopes($query, $this->withoutScopes);
+            });
         }
         throw new ModelNotFoundException(
             'You must declare your repository $model attribute with an Illuminate\Database\Eloquent\Model '

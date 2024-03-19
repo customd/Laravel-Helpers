@@ -80,7 +80,7 @@ class DatabaseMacrosTest extends TestCase
         $this->assertStringContainsString('or LOWER(country) != ?', $query->toSql());
         $this->assertStringContainsString('LOWER(company) = ?', $query->toSql());
 
-        $this->assertTrue(str($query->toRawSql())->contains("where LOWER(name) = 'testcom' and (LOWER(company) = 'my-companbyname') or LOWER(country) != 'nz' or (LOWER(col) = 'umn' or LOWER(mnot) = 'tonm' or LOWER(asdf) != 'asdf')"));
+        $this->assertTrue(str($query->toRawSql())->contains("where (LOWER(name) = 'testcom' and (LOWER(company) = 'my-companbyname') or LOWER(country) != 'nz' or (LOWER(col) = 'umn' or LOWER(mnot) = 'tonm' or LOWER(asdf) != 'asdf'))"));
     }
 
     public function test_has_one_nullable()
