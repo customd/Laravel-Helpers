@@ -8,8 +8,9 @@ class SimpleValueFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => ['required', 'string'],
-            'count' => ['required', 'int', "min:10"]
+            'value'      => ['required', 'string'],
+            'item_count' => ['required', 'int', "min:10"],
+
         ];
     }
 }

@@ -5,16 +5,21 @@ namespace CustomD\LaravelHelpers\Tests\ValueObjects;
 
 use CustomD\LaravelHelpers\ValueObjects\ValueObject;
 
+#[\CustomD\LaravelHelpers\ValueObjects\Attributes\MapToCase('camel')]
 class SimpleValue extends ValueObject
 {
     public function __construct(
         readonly public string $value,
-        readonly public int $count = 0
+        readonly public int $itemCount = 0
     ) {
     }
 
     public function rules(): array
     {
-        return (new SimpleValueFormRequest())->rules();
+        return [
+
+            'itemCount' => ["int", "min:10"],
+
+        ];
     }
 }

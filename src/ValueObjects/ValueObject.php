@@ -7,10 +7,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\MapToCase;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
+use ReflectionAttribute;
 
 /**
  * @implements Arrayable<string,mixed>
@@ -26,6 +28,7 @@ abstract class ValueObject implements Arrayable
      */
     public static function make(...$args): static
     {
+
         $mapped = static::resolveChildValueObjects(...$args);
         $mapped = static::resolveMakeableObjects(...$mapped);
         $mapped = static::resolveCollectableValueObjects(...$mapped);
@@ -56,7 +59,20 @@ abstract class ValueObject implements Arrayable
         /** @var array<string, mixed> */
         $data = $onlyValidated ? $request->validated() : $request->all();
 
-        $args = collect($data)->only(
+        $map = static::resolveMapToCaseAttribute();
+
+        $args = collect($data);
+        if ($map === 'snake') {
+            $args = $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]);
+        }
+        if ($map === 'camel') {
+            $args = $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]);
+        }
+        if ($map === 'studly') {
+            $args = $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]);
+        }
+
+        $args = $args->only(
             static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
         )->toArray();
 
@@ -221,5 +237,15 @@ abstract class ValueObject implements Arrayable
             });
 
         return $args; //@phpstan-ignore-line
+    }
+
+
+    public static function resolveMapToCaseAttribute(): ?string
+    {
+        $reflectionClass = new ReflectionClass(static::class);
+
+        return collect($reflectionClass->getAttributes(MapToCase::class))
+            ->map(fn (ReflectionAttribute $attribute): string => $attribute->getArguments()[0])
+            ->first();
     }
 }
