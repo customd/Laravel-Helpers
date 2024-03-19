@@ -1,3 +1,10 @@
+# [4.16.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.15.0...v4.16.0) (2024-03-19)
+
+
+### Features
+
+* added maptocase attribute for fromrequest method on valueobject ([ad16cba](https://git.customd.com/composer/Laravel-Helpers/commit/ad16cba365e9c3908e3a2c591de4ecd84da218ea))
+
 # [4.15.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.14.0...v4.15.0) (2024-03-19)
 
 
