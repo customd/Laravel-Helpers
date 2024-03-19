@@ -16,21 +16,6 @@ parameters:
 			path: src/Repository/BaseRepository.php
 
 		-
-			message: "#^Parameter \\#1 \\$modelClass of method CustomD\\\\LaravelHelpers\\\\Repository\\\\BaseRepository\\<TModelClass\\>\\:\\:setModel\\(\\) expects string, string\\|TModelClass of mixed given\\.$#"
-			count: 1
-			path: src/Repository/BaseRepository.php
-
-		-
-			message: "#^Type mixed in generic type Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, mixed\\> in PHPDoc tag @return is not subtype of template type TModel of Illuminate\\\\Database\\\\Eloquent\\\\Model of class Illuminate\\\\Database\\\\Eloquent\\\\Collection\\.$#"
-			count: 2
-			path: src/Repository/BaseRepository.php
-
-		-
-			message: "#^Type mixed in generic type Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, mixed\\> in PHPDoc tag @var is not subtype of template type TModel of Illuminate\\\\Database\\\\Eloquent\\\\Model of class Illuminate\\\\Database\\\\Eloquent\\\\Collection\\.$#"
-			count: 2
-			path: src/Repository/BaseRepository.php
-
-		-
 			message: "#^Method CustomD\\\\LaravelHelpers\\\\Repository\\\\BaseRepositoryInterface\\:\\:setModel\\(\\) return type with generic class CustomD\\\\LaravelHelpers\\\\Repository\\\\BaseRepository does not specify its types\\: TModelClass$#"
 			count: 1
 			path: src/Repository/BaseRepositoryInterface.php
