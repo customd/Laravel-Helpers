@@ -1,3 +1,10 @@
+# [4.15.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.14.0...v4.15.0) (2024-03-19)
+
+
+### Features
+
+* allow repository to run calls without global scopes ([c675873](https://git.customd.com/composer/Laravel-Helpers/commit/c6758735a35bce70184aa48eabdb5087403fbe87))
+
 # [4.14.0](https://git.customd.com/composer/Laravel-Helpers/compare/v4.13.1...v4.14.0) (2024-03-18)
 
 
