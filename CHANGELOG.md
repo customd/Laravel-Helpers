@@ -1,3 +1,11 @@
+# [5.2.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.1.0...v5.2.0) (2024-03-19)
+
+
+### Features
+
+* added maptocase attribute for fromrequest method on valueobject ([2cd2516](https://git.customd.com/composer/Laravel-Helpers/commit/2cd2516f47aa0843620c5703585aaa6212d49a50))
+* allow repository to run calls without global scopes ([0935044](https://git.customd.com/composer/Laravel-Helpers/commit/0935044a9dcb65e261daf8d3a63c3bc03506fe62))
+
 # [5.1.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.0.0...v5.1.0) (2024-03-18)
 
 
