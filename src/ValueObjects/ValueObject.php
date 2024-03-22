@@ -62,15 +62,12 @@ abstract readonly class ValueObject implements Arrayable
         $map = static::resolveMapToCaseAttribute();
 
         $args = collect($data);
-        if ($map === 'snake') {
-            $args = $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]);
-        }
-        if ($map === 'camel') {
-            $args = $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]);
-        }
-        if ($map === 'studly') {
-            $args = $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]);
-        }
+        $args = match ($map) {
+            'snake' => $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]),
+            'camel' => $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]),
+            'studly' => $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]),
+            default => $args,
+        };
 
         $args = $args->only(
             static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
