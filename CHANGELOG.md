@@ -1,3 +1,10 @@
+## [5.2.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.2.0...v5.2.1) (2024-03-22)
+
+
+### Bug Fixes
+
+* **value objects:** small optimisation of key case mapping ([f469892](https://git.customd.com/composer/Laravel-Helpers/commit/f4698924e1c5c083f3c292fb067f2d00a2fa652b))
+
 # [5.2.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.1.0...v5.2.0) (2024-03-19)
 
 
