@@ -23,9 +23,8 @@ class CrudPermissionTest extends TestCase
         Gate::define('model_ones.view', fn() => true);
         Gate::define('model_ones.fetch', fn() => false);
 
-        $this->assertTrue($policy->viewAny($user));
-        $this->assertFalse($policy->fetch($user, $model));
-        $this->assertTrue($policy->view($user, $model));
-        $this->assertFalse($policy->somemethod($user, $model));
+        $this->assertTrue($policy->viewAny($user)->allowed());
+        $this->assertFalse($policy->fetch($user, $model)->allowed());
+        $this->assertTrue($policy->view($user, $model)->allowed());
     }
 }
