@@ -2,20 +2,19 @@
 
 namespace CustomD\LaravelHelpers\Models\Policies;
 
+
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Access\Authorizable;
-use Illuminate\Database\Eloquent\InvalidCastException;
-use Illuminate\Database\Eloquent\MissingAttributeException;
-use Illuminate\Database\LazyLoadingViolationException;
-use Illuminate\Support\Facades\Gate;
-use LogicException;
+use \Illuminate\Auth\Access\Response;
 
 trait CrudPermissions
 {
+    use HandlesAuthorization;
 
-    public function can(Authenticatable&Authorizable $user, string $action, ?Model $model = null): bool
+    public function can(Authenticatable&Authorizable $user, string $action, ?Model $model = null): Response
     {
         $permission = collect([
             $this->permission_name ?? self::parsePermissionNameFromPolicy(),
@@ -33,7 +32,7 @@ trait CrudPermissions
             }
         }
 
-        return $user->can($permission);
+        return $user->can($permission) ? $this->allow() : $this->deny();
     }
 
     /**
@@ -81,8 +80,40 @@ trait CrudPermissions
             ->value;
     }
 
-    public function __call($method, $parameters)
+    public function viewAny(Authenticatable&Authorizable $user): Response
     {
-        return $this->can($parameters[0], $method, $parameters[1] ?? null);
+        return $this->can($user, 'viewAny');
     }
+
+
+    public function view(Authenticatable&Authorizable $user, Model $model): Response
+    {
+        return $this->can($user, 'view');
+    }
+
+    public function create(Authenticatable&Authorizable $user): Response
+    {
+        return $this->can($user, 'create');
+    }
+
+    public function update(Authenticatable&Authorizable $user, Model $model): Response
+    {
+        return $this->can($user, 'update');
+    }
+
+    public function delete(Authenticatable&Authorizable $user, Model $model): Response
+    {
+        return $this->can($user, 'delete');
+    }
+
+    public function forceDelete(Authenticatable&Authorizable $user, Model $model): Response
+    {
+        return $this->can($user, 'forceDelete');
+    }
+
+    public function restore(Authenticatable&Authorizable $user, Model $model): Response
+    {
+        return $this->can($user, 'restore');
+    }
+
 }
