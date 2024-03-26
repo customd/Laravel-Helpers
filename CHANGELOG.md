@@ -1,3 +1,10 @@
+## [5.2.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.2.1...v5.2.2) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixes to use only crud methods by default ([5eb47ff](https://git.customd.com/composer/Laravel-Helpers/commit/5eb47ff372ff0c90642d8b4b39e905ea80506cb1))
+
 ## [5.2.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.2.0...v5.2.1) (2024-03-22)
 
 
