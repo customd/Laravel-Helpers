@@ -7,6 +7,8 @@ use Carbon\CarbonImmutable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use CustomD\LaravelHelpers\Database\Query\Mixins\NullOrEmptyMixin;
@@ -39,6 +41,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         Http::macro('enableRecording', function () {
             /** @var  \Illuminate\Http\Client\Factory $this*/
             return $this->record(); //@phpstan-ignore-line
+        });
+
+        Str::macro('isEmail', fn(string $value): bool => filter_var($value, FILTER_VALIDATE_EMAIL) ? true : false);
+        Stringable::macro('isEmail', function (): bool {
+            /** @var Stringable $this */
+            return Str::isEmail($this->toString());
         });
     }
 
