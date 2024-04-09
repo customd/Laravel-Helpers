@@ -1,3 +1,10 @@
+## [5.3.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.3.0...v5.3.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **docs:** Add prelim HTTP Recording section to mention requirement of `tests/stubs/` dir ([#3](https://git.customd.com/composer/Laravel-Helpers/issues/3)) ([67dfa17](https://git.customd.com/composer/Laravel-Helpers/commit/67dfa1793fa91fb02bb158d7b0806c803256637d))
+
 # [5.3.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.2.2...v5.3.0) (2024-04-09)
 
 
