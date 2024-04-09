@@ -15,7 +15,7 @@ Collection of helpers for re-use accross a few of our projects
   - [Helpers](#helpers)
   - [Delayed notifications blocking:](#delayed-notifications-blocking)
   - [DB Macros](#db-macros)
-  - [String Macros](#string-macros)Record or Fake HTTP Calls
+  - [String Macros](#string-macros)
   - [Record or Fake HTTP Calls](#record-or-fake-http-calls)
   - [Credits](#credits)
 
