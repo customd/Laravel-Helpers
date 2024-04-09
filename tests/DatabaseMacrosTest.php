@@ -19,12 +19,16 @@ class DatabaseMacrosTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         # Setup default database to use sqlite :memory:
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
-        ]);
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite.prefix', fake()->unique()->word(5));
+        $app['config']->set('database.connections.sqlite.database', "tests/database.sqlite");
+        // $app['config']->set('database.connections.testbench', [
+        //     'driver'   => 'sqlite',
+        //     'database' => ':memory:',
+        //     'prefix'   => '',
+        // ]);
+
+        // dd(config('database'));
     }
 
     protected function getPackageProviders($app)
@@ -65,12 +69,19 @@ class DatabaseMacrosTest extends TestCase
 
     public function test_case_insensitive_iwhere()
     {
-        $query = ModelOne::iWhere('name', 'TestCom')->iWhere(['company' => 'my-comPanbyName'])->orIWhere('country', '!=', 'Nz');
+        $query = ModelOne::iWhere('name', 'TestCom')
+            ->iWhere(['company' => 'my-comPanbyName'])
+            ->orIWhere('country', '!=', 'Nz')
+            ->orIWhere([
+                'col'  => 'umn',
+                'mnot' => 'tonm',
+                ['asdf' ,'!=', 'asdf', 'or'],
+            ]);
         $this->assertStringContainsString('LOWER(name) = ?', $query->toSql());
         $this->assertStringContainsString('or LOWER(country) != ?', $query->toSql());
         $this->assertStringContainsString('LOWER(company) = ?', $query->toSql());
 
-        $this->assertEquals(['testcom','my-companbyname','nz'], $query->getBindings());
+        $this->assertTrue(str($query->toRawSql())->contains("where (LOWER(name) = 'testcom' and (LOWER(company) = 'my-companbyname') or LOWER(country) != 'nz' or (LOWER(col) = 'umn' or LOWER(mnot) = 'tonm' or LOWER(asdf) != 'asdf'))"));
     }
 
     public function test_has_one_nullable()

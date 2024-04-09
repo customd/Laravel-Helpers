@@ -10,16 +10,28 @@
 
 Collection of helpers for re-use accross a few of our projects
 
+- [Laravel Helpers ](#laravel-helpers-)
   - [Installation](#installation)
+  - [Upgrade V2 to V3](#upgrade-v2-to-v3)
   - [Crud Policy Trait](#crud-policy-trait)
   - [Helpers](#helpers)
-  - [Delayed notifications blocking:](#delayed-notifications-blocking)
   - [DB Macros](#db-macros)
+    - [Null Or Empty](#null-or-empty)
+    - [Case insensitive statments](#case-insensitive-statments)
+    - [Enforced Non Nullable Relations (orFail chain)](#enforced-non-nullable-relations-orfail-chain)
+  - [DB Repositories](#db-repositories)
   - [String Macros](#string-macros)
   - [Record or Fake HTTP Calls](#record-or-fake-http-calls)
+  - [Observerable trait (Deprecated)](#observerable-trait-deprecated)
+  - [Date Manipulation](#date-manipulation)
+    - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
+  - [Value Objects](#value-objects)
+  - [Larastan Stubs](#larastan-stubs)
+  - [Filament Plugin](#filament-plugin)
   - [Credits](#credits)
 
 ## Installation
+
 
 Install via composer
 
@@ -107,33 +119,35 @@ function related(){
   return $this->hasOne()->orFail();
 }
 ```
-## String Macros
-`Str::reverse(string)` - to safely reverse a string that is multibyte safe.
 
-## Date Manipulation
+## DB Repositories
+use of repositories via extending the `CustomD\LaravelHelpers\Repository\BaseRepository` abstract
+example in the [UserRepository.stub.php](https://git.customd.com/composer/Laravel-Helpers/-/blob/master/src/Repository/UserRepository.php.stub) file
 
-You can set user timezones via the following options:
-1. optionally create a migration with:
+
+## Observerable trait (Deprecated)
+adding this trait to your models will automatically look for an observer in the app/Observers folder with the convension {model}Observer as the classname,
+
+you can additionally/optionally add
+```php
+protected static $observers = [ ...arrayOfObservers]
 ```
-Schema::table('users', function (Blueprint $table) {
-            $table->string('timezone', 40)->nullable();
-        });
+to add a additional ones if
+
+Replace this with
 ```
-2. in user model:
-```
-pubic function timezone(): Attribute
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\UserObserver;
+
+#[ObservedBy(UserObserver::class)]
+#[ObservedBy(AnotherUserObserver::class)]
+class User extends Model
 {
-  return Attribute::get(fn($value) => $value ?? config('app.user_timezone'));
+    //
 }
 ```
 
-Additionally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
 
-3. in your app config file add the `user_timezone` parameter.
-
-4. add the UserTimeZone middleware to your api middleware list.
-
-You can now access the current requests timezone via `config('request.user.timezone')`
 
 ## Record or Fake HTTP Calls
 
@@ -157,8 +171,162 @@ Add the trait to your PHPUnit test file, ensure the `tests/stubs/` directory exi
   }
 ```
 
+## Date Manipulation
+
+You can set user timezones via the following options:
+1. optionally create a migration with:
+```
+Schema::table('users', function (Blueprint $table) {
+            $table->string('timezone', 40)->nullable();
+        });
+```
+2. in user model:
+```
+pubic function timezone(): Attribute
+{
+  return Attribute::get(fn($value) => $value ?? config('app.user_timezone'));
+}
+```
+
+Additionally you can set defaults on the timezone via the attributes method or a setter or even in the migration.
+
+
+3. in your app config file add the `user_timezone` parameter.
+
+4. add the UserTimeZone middleware to your api middleware list.
+
+You can now access the current requests timezone via `config('request.user.timezone')`
+
+
+### Date(Carbon) Helpers attached to above:
+methods available:
+
+* `setUserTimezone(string $timezone) : Static` - sets the users timezone (default set by helper)
+* `getUserTimezone() : string` - gets current users timezone
+* `setSystemTimezone(string $timezone) : Static` - sets system timezone (Default app.timezone)
+* `getSystemTimezone(): string` - gets teh current timezone
+* `toUsersTimezone(): Static` - returns carbon instance set to users timezone
+* `toSystemTimezone(): Static` - returns carbon instance set to system timezone
+* `usersStartOfDay(): Static` - returns carbon instance set to start of users day (converts to users timezone => start of day => to systemtime)
+* `usersEndOfDay(): Static` - users end of day
+* `usersStartOfWeek(): Static`
+* `usersEndOfWeek(): Static`
+* `usersStartOfMonth(): Static`
+* `usersEndOfMonth(): Static`
+* `usersStartOfQuarter(): Static`
+* `usersEndOfQuarter(): Static`
+* `usersStartOfYear(): Static`
+* `usersEndOfYear(): Static`
+* `parseWithTz(string $time): Static` - parses the time passed using the users timezone unless the timezone is in the timestamp
+* `hasISOFormat(string $date): bool` - checks if the date is in iso format.
+
+You can also use the CDCarbonDate to create a few different date objects.
+
+## Value Objects
+Example:
+```php
+<?php
+declare(strict_types=1);
+
+namespace CustomD\LaravelHelpers\Tests\ValueObjects;
+
+use CustomD\LaravelHelpers\ValueObjects\ValueObject;
+
+final readonly class SimpleValue extends ValueObject
+{
+    protected function __construct(
+        public string $value,
+        public int $count = 0
+    ) {
+    }
+
+  /** optionally add some validation rules, leave out the method if the type sets are enough **/
+    public function rules(): array
+    {
+        return [
+          'value' => ['string', 'max:250'],
+          'count' => ['max:99'],
+        ];
+    }
+}
+
+$simpleValue = SimpleValue::make(value: 'hello World', count: 33);
+
+```
+Or using attributes to make advanced objects.
+```php
+<?php
+declare(strict_types=1);
+
+namespace CustomD\LaravelHelpers\Tests\ValueObjects;
+
+use Illuminate\Support\Collection;
+use CustomD\LaravelHelpers\ValueObjects\ValueObject;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
+use CustomD\LaravelHelpers\ValueObjects\Attributes\MapToCase;
+
+#[MapToCase('camel')]
+final readonly class ComplexValue extends ValueObject
+{
+    public function __construct(
+        #[ChildValueObject(StringValue::class)]
+        readonly public StringValue $value,
+        readonly public array $address,
+        #[ChildValueObject(SimpleValue::class)]
+        readonly public SimpleValue $simpleValue,
+        #[MakeableObject(Constructable::class)]
+        readonly public ?Constructable $constructable = null,
+        #[CollectableValue(SimpleValue::class)]
+        readonly ?Collection $simpleValues = null,
+    ) {
+    }
+
+}
+```
+
+Best practice is to use the make option, which will validate, if you use a public constructor it will not.
+
+These should all be marked as READONLY and FINAL.
+
+The attributes available are:
+* `ChildValueObject(valueobectclass)` - which will make a new valueObject
+* `CollectableValue(valueobjectclass)` - which will convert an array to a coollection of the value objects
+* `MakeableObject(class, [?$spread = false])` - will look for a make method or else construct if passed an non object - if spread is true will expand the array else will pass the array as a single argument
+* `MapToCase(('snake|camel|studly'))` - for the fromRequest method
+
+
+Mapping Valueobject from your Request would be as easy as doing one of the following:
+```php
+//eiterh in your code where you need it.
+$object = ValueObject::fromRequest($MyFormRequest, true|false); //defaults to true (validated only values, false will be all from the request);
+
+//or add a method to your FormRequest
+public function getObject(): ValueObject
+{
+  return ValueObject::fromRequest($this);
+}
+```
+
+## Larastan Stubs
+**these are temporary only till implemented by larastan**
+
+add to your phpstan.neon.dist file
+```yaml
+parameters:
+    stubFiles:
+        - ./vendor/custom-d/laravel-helpers/larastan/blank_filled.stub
+```
+
+## Filament Plugin
+** this is only if you want to deal with user timezones for display, else will be in UTC in the Filament panel **
+
+simply add to your panelProvider
+`->plugin(UserTimeZonePlugin::make())`
+
+
 ## Credits
 
 - [](https://github.com/custom-d/laravel-helpers)
 - [All contributors](https://github.com/custom-d/laravel-helpers/graphs/contributors)
-

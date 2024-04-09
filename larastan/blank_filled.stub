@@ -1,0 +1,18 @@
+<?php
+
+
+/**
+ * @phpstan-assert-if-false !=null $value
+ * @phpstan-assert-if-false non-empty-string|non-empty-array $value
+ * @param  mixed  $value
+ * @return bool
+ */
+function blank($value): bool {}
+
+/**
+ * @phpstan-assert-if-true !=null $value
+ * @phpstan-assert-if-true non-empty-string|non-empty-array $value
+ * @param mixed $value
+ * @return bool
+ */
+function filled($value): bool {}

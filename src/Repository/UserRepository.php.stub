@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Models\Repository;
+
+use App\Models\User;
+
+/**
+ * @template TModelClass of User
+ */
+class UserRepository extends BaseRepository
+{
+    protected $model = User::class;
+}

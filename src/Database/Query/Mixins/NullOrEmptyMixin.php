@@ -12,7 +12,7 @@ class NullOrEmptyMixin
 
     public function whereNullOrEmpty(): Closure
     {
-        return function (string $column) {
+        return function (string $column): Builder {
             /** @var \Illuminate\Database\Query\Builder $this */
             return $this->where(fn (Builder $builder) => $builder->where($column, '=', '')->orWhereNull($column));
         };
@@ -20,7 +20,7 @@ class NullOrEmptyMixin
 
     public function orWhereNullOrEmpty(): Closure
     {
-        return function (string $column) {
+        return function (string $column): Builder {
             /** @var \Illuminate\Database\Query\Builder $this */
             return $this->orWhere(fn (Builder $builder) => $builder->where($column, '=', '')->orWhereNull($column));
         };
@@ -29,7 +29,7 @@ class NullOrEmptyMixin
 
     public function whereNotNullOrEmpty(): Closure
     {
-        return function (string $column) {
+        return function (string $column): Builder {
             /** @var \Illuminate\Database\Query\Builder $this */
             return $this->where(fn(Builder $builder) => $builder->where($column, '!=', '')->whereNotNull($column));
         };
@@ -37,7 +37,7 @@ class NullOrEmptyMixin
 
     public function orWhereNotNullOrEmpty(): Closure
     {
-        return function (string $column) {
+        return function (string $column): Builder {
             /** @var \Illuminate\Database\Query\Builder $this */
             return $this->orWhere(fn(Builder $builder) => $builder->where($column, '!=', '')->whereNotNull($column));
         };
@@ -46,13 +46,41 @@ class NullOrEmptyMixin
     public function whereNullOrValue(): Closure
     {
         /** @param $value mixed **/
-        return function (string $column, $operator = null, $value = null, $boolean = 'and') {
+        return function (string $column, $operator = null, $value = null, $boolean = 'and'): Builder {
             /** @var \Illuminate\Database\Query\Builder $this */
             [$value, $operator] = $this->prepareValueAndOperator(
-                $value, $operator, func_num_args() === 2
+                $value,
+                $operator,
+                func_num_args() === 2
             );
 
             return $this->where(fn (Builder $builder) => $builder->whereNull($column)->when($value, fn($sbuilder) => $sbuilder->orWhere($column, $operator, $value, $boolean)));
+        };
+    }
+
+    public function iWhere(): Closure
+    {
+        return function (string|array $column, $operator = null, $value = null, $boolean = 'and'): Builder {
+            /** @var \Illuminate\Database\Query\Builder $this */
+            if (is_array($column)) {
+                return $this->addArrayOfWheres($column, $boolean, 'iWhere'); //@phpstan-ignore-line
+            }
+
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value,
+                $operator,
+                func_num_args() === 2
+            );
+
+            return $this->whereRaw("LOWER({$column}) {$operator} ?", [strtolower($value)], $boolean);
+        };
+    }
+
+    public function orIWhere(): Closure
+    {
+        return function (string|array $column, $operator = null, $value = null): Builder {
+            /** @var \Illuminate\Database\Query\Builder $this */
+            return $this->iWhere($column, $operator, $value, 'or');
         };
     }
 }

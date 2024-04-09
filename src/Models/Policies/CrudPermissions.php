@@ -2,27 +2,72 @@
 
 namespace CustomD\LaravelHelpers\Models\Policies;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Contracts\Auth\Access\Authorizable;
+use \Illuminate\Auth\Access\Response;
 
 trait CrudPermissions
 {
+    use HandlesAuthorization;
 
-    public function can(Authenticatable $user, string $action, ?Model $model = null): bool
+    public function can(Authenticatable&Authorizable $user, string $action, ?Model $model = null): Response
     {
         $permission = collect([
             $this->permission_name ?? self::parsePermissionNameFromPolicy(),
             $action
         ])->filter()->implode(".");
 
-        if ($model && method_exists($model, 'userHasPermission'))
-        {
-            info('Model::userHasPermission calls have been deprecated - and will be removed in the next version');
-            if(! $model->userHasPermission($user)) {
-                return false;
+        if ($model) {
+            $can = $this->canOnModel($user, $permission, $model);
+            if ($can === true) {
+                return $can;
+            }
+            $can = $this->canOnModelField($user, $permission, $model);
+            if ($can === true) {
+                return $can;
             }
         }
+
+        return $user->can($permission) ? $this->allow() : $this->deny();
+    }
+
+    /**
+     * @still in development
+     */
+    protected function canOnModel(Authenticatable&Authorizable $user, string $permission, Model $model): ?true
+    {
+
+        if (property_exists($this, 'ownerIdColumn') === false) {
+            return null;
+        }
+
+        $ownerId = $model->getAttribute($this->ownerIdColumn);
+        if ($ownerId === $user->getAuthIdentifier()) {
+            return true;
+        }
+
+        return null;
+    }
+
+    /**
+     * @still in development
+     */
+    protected function canOnModelField(Authenticatable&Authorizable $user, string $permission, Model $model): ?bool
+    {
+        if (property_exists($this, 'modelField') === false || $this->modelField === false) {
+            return null;
+        }
+
+        if ($this->modelField === true || $this->modelField === '*') {
+            $permission .= ".*";
+        } else {
+            $permission .= "." . $model->getAttribute($this->modelField);
+        }
+
         return $user->can($permission);
     }
 
@@ -35,73 +80,40 @@ trait CrudPermissions
             ->value;
     }
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return mixed
-     */
-    public function viewAny(Authenticatable $user)
+    public function viewAny(Authenticatable&Authorizable $user): Response
     {
         return $this->can($user, 'viewAny');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
-     */
-    public function view(Authenticatable $user, Model $model)
+
+    public function view(Authenticatable&Authorizable $user, Model $model): Response
     {
         return $this->can($user, 'view');
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return mixed
-     */
-    public function create(Authenticatable $user)
+    public function create(Authenticatable&Authorizable $user): Response
     {
         return $this->can($user, 'create');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
-     */
-    public function update(Authenticatable $user, Model $model)
+    public function update(Authenticatable&Authorizable $user, Model $model): Response
     {
         return $this->can($user, 'update');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
-     */
-    public function delete(Authenticatable $user, Model $model)
+    public function delete(Authenticatable&Authorizable $user, Model $model): Response
     {
         return $this->can($user, 'delete');
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
-     */
-    public function restore(Authenticatable $user, Model $model)
+    public function forceDelete(Authenticatable&Authorizable $user, Model $model): Response
+    {
+        return $this->can($user, 'forceDelete');
+    }
+
+    public function restore(Authenticatable&Authorizable $user, Model $model): Response
     {
         return $this->can($user, 'restore');
     }
+
 }
