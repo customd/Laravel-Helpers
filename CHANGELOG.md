@@ -1,3 +1,10 @@
+# [5.3.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.2.2...v5.3.0) (2024-04-09)
+
+
+### Features
+
+* add isEmail helper to Str / Stringable ([28463ee](https://git.customd.com/composer/Laravel-Helpers/commit/28463ee47be321b8e15740ec2de8675eabc458b7))
+
 ## [5.2.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.2.1...v5.2.2) (2024-03-26)
 
 
