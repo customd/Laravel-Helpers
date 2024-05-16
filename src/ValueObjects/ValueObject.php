@@ -29,20 +29,6 @@ abstract readonly class ValueObject implements Arrayable
     public static function make(...$args): static
     {
 
-        $map = static::resolveMapToCaseAttribute();
-
-        $args = collect($args);
-        $args = match ($map) {
-            'snake' => $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]),
-            'camel' => $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]),
-            'studly' => $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]),
-            default => $args,
-        };
-
-        $args = $args->only(
-            static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
-        )->toArray();
-
         $mapped = static::resolveChildValueObjects(...$args);
         $mapped = static::resolveMakeableObjects(...$mapped);
         $mapped = static::resolveCollectableValueObjects(...$mapped);
@@ -72,7 +58,22 @@ abstract readonly class ValueObject implements Arrayable
     {
         /** @var array<string, mixed> */
         $data = $onlyValidated ? $request->validated() : $request->all();
-        return static::make(...$data); //@phpstan-ignore-line -- meant to be static
+
+        $map = static::resolveMapToCaseAttribute();
+
+        $args = collect($data);
+        $args = match ($map) {
+            'snake' => $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]),
+            'camel' => $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]),
+            'studly' => $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]),
+            default => $args,
+        };
+
+        $args = $args->only(
+            static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
+        )->toArray();
+
+        return new static(...$args); //@phpstan-ignore-line -- meant to be static
     }
 
     /**
