@@ -19,7 +19,6 @@ use ReflectionAttribute;
  */
 abstract readonly class ValueObject implements Arrayable
 {
-
     /**
      *
      * @param mixed $args
@@ -28,12 +27,27 @@ abstract readonly class ValueObject implements Arrayable
      */
     public static function make(...$args): static
     {
+        if (array_is_list($args) === false) {
+            /** @var Collection<string,mixed> $args*/
+            $args = collect($args);
+            $map = static::resolveMapToCaseAttribute();
+            $args = match ($map) {
+                'snake' => $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]),
+                'camel' => $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]),
+                'studly' => $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]),
+                default => $args,
+            };
+
+            $args = $args->only(
+                static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
+            )->toArray();
+        }
 
         $mapped = static::resolveChildValueObjects(...$args);
         $mapped = static::resolveMakeableObjects(...$mapped);
         $mapped = static::resolveCollectableValueObjects(...$mapped);
 
-        $instance =  new static(...$mapped); //@phpstan-ignore-line -- meant to be static
+        $instance =  new static(...$mapped); //@phpstan-ignore new.static (this is a valid use case for late static binding)
         $instance->validate();
         return $instance;
     }
@@ -59,21 +73,15 @@ abstract readonly class ValueObject implements Arrayable
         /** @var array<string, mixed> */
         $data = $onlyValidated ? $request->validated() : $request->all();
 
-        $map = static::resolveMapToCaseAttribute();
+        return static::make(...$data);
+    }
 
-        $args = collect($data);
-        $args = match ($map) {
-            'snake' => $args->mapWithKeys(fn($value, $key) => [str($key)->snake()->toString() => $value]),
-            'camel' => $args->mapWithKeys(fn($value, $key) => [str($key)->camel()->toString() => $value]),
-            'studly' => $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]),
-            default => $args,
-        };
-
-        $args = $args->only(
-            static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
-        )->toArray();
-
-        return new static(...$args); //@phpstan-ignore-line -- meant to be static
+    /**
+     * @param array<int|string, mixed> $data
+     */
+    public static function fromArray(array $data): static
+    {
+        return static::make(...$data);
     }
 
     /**
