@@ -1,3 +1,10 @@
+## [5.3.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.3.1...v5.3.2) (2024-05-16)
+
+
+### Bug Fixes
+
+* **valueObjects:** mapping only if array is indexed ([6c7b119](https://git.customd.com/composer/Laravel-Helpers/commit/6c7b11971460a2d7615d447b5221d7e1387396d8))
+
 ## [5.3.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.3.0...v5.3.1) (2024-04-09)
 
 
