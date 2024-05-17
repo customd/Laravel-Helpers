@@ -15,7 +15,6 @@ class PermissionBasedAccessScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
         if (is_null(auth()->id())) {
-            $builder->accessForbidden(); //@phpstan-ignore-line => scope from trait
             return;
         }
 
