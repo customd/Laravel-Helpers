@@ -51,6 +51,8 @@ composer require custom-d/laravel-helpers
 by using the `CustomD\LaravelHelpers\Models\Policies\CrudPermissions` trait in your model policy along side Spatie role permissions using wildcard permissions
 you can have your policy look like:
 
+This will by default use a plural of the model name: ie User becomes users / BlogPost becomes blog_posts -- much like tablename.
+
 ```php
 
 namespace App\Models\Policies;
@@ -67,15 +69,38 @@ class UserPolicy
 
 and it will check for the following permissions:
 
-- user.viewAny (list is v2 and earlier)
-- user.view
-- user.create
-- user.update
-- user.delete
-- user.restore
+- users.viewAny (list is v2 and earlier)
+- users.view
+- users.create
+- users.update
+- users.delete
+- users.restore
 
 for user locked based policy permissions you can add the following method to your model:
 `userHasPermission(User $user): bool`
+
+## Crud Access Permission Global Trait & Scope
+By using the `CustomD\LaravelHelpers\Traits\PermissionBasedAccess` trait on your model and the permissions
+
+this will look for the following scopes by default:
+`xxx.viewAny`, `xxx.view`, `xxx.viewOwn`
+
+This works as follows:
+
+* the scope will look if there is a user, if not will call the `scopeAccessForbidden` scope on the model (declared in the trait, so can be overwritten),
+* if `viewAny` / `view` are true, then will call `scopeFullAccessAllowed` scope
+* if `viewOwn` is trie, then will call `scopeUserAccessAllowed` scope
+* fallback to `scopeAccessForbidden`
+
+To modify the user column, add this to the model.
+```
+    protected function getOwnerKeyColumn(): string
+    {
+        return 'custom_id';
+    }
+```
+
+to call without the scopes: use the `withoutPermissionCheck` modifier: eg `Model::withoutPermissionCheck()->get()`
 
 ## Helpers
 
