@@ -14,8 +14,16 @@ class CreateStructureForUnitTest extends Migration
     public function up()
     {
 
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
             Schema::create('model_ones', function (Blueprint $table) {
                 $table->id();
+                $table->unsignedBigInteger('user_id')->nullable();
                 $table->string('name')->nullable();
                 $table->softDeletes();
                 $table->timestamps();

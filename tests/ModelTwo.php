@@ -16,6 +16,6 @@ class ModelTwo extends Model
 
     public function modelOneForced(): BelongsTo
     {
-        return $this->belongsTo(ModelOne::class, 'model_one_id')->orFail();
+        return $this->belongsTo(ModelOne::class, 'model_one_id')->withoutPermissionCheck()->orFail();
     }
 }
