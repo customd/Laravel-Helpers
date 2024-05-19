@@ -1,3 +1,10 @@
+# [5.4.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.3.2...v5.4.0) (2024-05-19)
+
+
+### Features
+
+* Permission Scope / Trait ([bd57248](https://git.customd.com/composer/Laravel-Helpers/commit/bd5724887bf8945be4167fc58d5f2e22f6ffd1d5))
+
 ## [5.3.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.3.1...v5.3.2) (2024-05-16)
 
 
