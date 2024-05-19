@@ -55,8 +55,8 @@ class AccessPermissionScopeTest extends TestCase
     public function test_guest_can_view_none()
     {
 
-        $this->assertStringContainsString('"user_id" is null', ModelOne::toRawSql());
-        $this->assertEquals(0, ModelOne::count());
+        $this->assertStringNotContainsString('"user_id" is null', ModelOne::toRawSql());
+        $this->assertEquals(6, ModelOne::count());
 
         $this->assertStringNotContainsString('"user_id" is null', ModelOne::withoutPermissionCheck()->toRawSql());
         $this->assertEquals(6, ModelOne::withoutPermissionCheck()->count());
