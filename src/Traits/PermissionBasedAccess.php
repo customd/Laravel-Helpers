@@ -29,15 +29,16 @@ trait PermissionBasedAccess
      /**
      * @param Builder<self> $query
      */
-    protected function scopeAccessForbidden(Builder $query): void
+    protected function scopeCannotRetrieveAnyRecord(Builder $query): void
     {
-        $query->whereNull($this->getOwnerKeyColumn());
+        //primary key cannot be null, this will force an empty result set
+        $query->whereNull($this->getKeyName());
     }
 
      /**
      * @param Builder<self> $query
      */
-    protected function scopeUserAccessAllowed(Builder $query): void
+    protected function scopeCanRetrieveOwnRecord(Builder $query): void
     {
         $query->where($this->getOwnerKeyColumn(), auth()->id());
     }
@@ -45,9 +46,10 @@ trait PermissionBasedAccess
      /**
      * @param Builder<self> $query
      */
-    protected function scopeFullAccessAllowed(Builder $query): void
+    protected function scopeCanRetrieveAnyRecord(Builder $query): void
     {
-        // do nothing here :-)
+        // do nothing here unless you want to limit it in your own implementation
+        // by overriding this method in your model.
     }
 
     /**
@@ -59,14 +61,12 @@ trait PermissionBasedAccess
 
         $tablePermissionKey = $this->getPermissionKey();
 
-        $viewAny = "{$tablePermissionKey}.viewAny";
         $view = "{$tablePermissionKey}.view";
         $viewOwn = "{$tablePermissionKey}.viewOwn";
 
         // what if a specific permission does not exist?
-        $canViewAny = Gate::has($viewAny) ? $user->can($viewAny) : true;
-        $canView = Gate::has($view) ? $user->can($view) : $canViewAny;
-        $canViewOwn = Gate::has($viewOwn) ? $user->can($viewOwn) : true;
+        $canView = Gate::has($view) ? $user->can($view) : false;
+        $canViewOwn = Gate::has($viewOwn) ? $user->can($viewOwn) : false;
 
         return [
             'canView'    => $canView,

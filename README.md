@@ -14,15 +14,16 @@ Collection of helpers for re-use accross a few of our projects
   - [Installation](#installation)
   - [Upgrade V2 to V3](#upgrade-v2-to-v3)
   - [Crud Policy Trait](#crud-policy-trait)
+    - [Permission naming.](#permission-naming)
+  - [Crud Access Permission Global Trait \& Scope for Model](#crud-access-permission-global-trait--scope-for-model)
   - [Helpers](#helpers)
   - [DB Macros](#db-macros)
     - [Null Or Empty](#null-or-empty)
     - [Case insensitive statments](#case-insensitive-statments)
     - [Enforced Non Nullable Relations (orFail chain)](#enforced-non-nullable-relations-orfail-chain)
   - [DB Repositories](#db-repositories)
-  - [String Macros](#string-macros)
-  - [Record or Fake HTTP Calls](#record-or-fake-http-calls)
   - [Observerable trait (Deprecated)](#observerable-trait-deprecated)
+  - [Record or Fake HTTP Calls](#record-or-fake-http-calls)
   - [Date Manipulation](#date-manipulation)
     - [Date(Carbon) Helpers attached to above:](#datecarbon-helpers-attached-to-above)
   - [Value Objects](#value-objects)
@@ -48,53 +49,76 @@ composer require custom-d/laravel-helpers
  - fixed Model::orWhereNotNullOrEmpty method to do correct query
 ## Crud Policy Trait
 
-by using the `CustomD\LaravelHelpers\Models\Policies\CrudPermissions` trait in your model policy along side Spatie role permissions using wildcard permissions
-you can have your policy look like:
+By using the `CustomD\LaravelHelpers\Models\Policies\CrudPermissions` trait in your model policy alongside `Spatie role permissions` you can avoid having to write lots of boilerplate methods in your policy file.
 
-This will by default use a plural of the model name: ie User becomes users / BlogPost becomes blog_posts -- much like tablename.
+
+Instead of a Policy like this
+```php
+class UserPolicy
+{
+    public function viewAny(Authenticatable $user): Response
+    {
+        return $user->can('users.viewAny');
+    }
+
+    public function view(Authenticatable $user, User $targetUser): Response
+    {
+        return $user->can('users.view');
+    }
+    ...
+```
+
+it would now look as follows:
 
 ```php
 
 namespace App\Models\Policies;
 
 use App\Models\Policies\Traits\CrudPermissions;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
-    use HandlesAuthorization;
     use CrudPermissions;
 }
 ```
 
-and it will check for the following permissions:
+and it will automatically check for the following permissions which you would have seeded / set up in Spatie's package.
 
-- users.viewAny (list is v2 and earlier)
+- users.viewAny
 - users.view
 - users.create
 - users.update
 - users.delete
+- users.forceDelete
 - users.restore
 
-for user locked based policy permissions you can add the following method to your model:
-`userHasPermission(User $user): bool`
+Additionally if using the `PermissionBasedAccess` trait on your model, the following extra ones are taken into account
+- users.viewOwn (as long as you own the record)
+- users.updateOwn
+- users.deleteOwn
 
-## Crud Access Permission Global Trait & Scope
-By using the `CustomD\LaravelHelpers\Traits\PermissionBasedAccess` trait on your model and the permissions
+If the `user_id` column is not `user_id`, set that in the `getOwnerKeyColumn` method documented below in the Crud Access for Model section.
 
-this will look for the following scopes by default:
-`xxx.viewAny`, `xxx.view`, `xxx.viewOwn`
+viewAny, create, restore & forceDelete will use the base versions only, and you would need to customise if needed yourself by setting up the permission or policy method to deal with it based on your business logic.
+Create and viewAny do not have Ownership within a default policy, and the restore / forceDelete are mainly only an administrative functionality.
+
+### Permission naming.
+The permission naming  will by default use a plural of the model name: ie `User` becomes `users` / `BlogPost` becomes `blog_posts`
+
+## Crud Access Permission Global Trait & Scope for Model
+If you use the `CustomD\LaravelHelpers\Traits\PermissionBasedAccess` trait on your model it will look for the following Spatie permissions by default:
+
+`xxx.view`, `xxx.viewOwn`
 
 This works as follows:
 
-* the scope will look if there is a user, if not will call the `scopeAccessForbidden` scope on the model (declared in the trait, so can be overwritten),
-* if `viewAny` / `view` are true, then will call `scopeFullAccessAllowed` scope
-* if `viewOwn` is trie, then will call `scopeUserAccessAllowed` scope
-* fallback to `scopeAccessForbidden`
+* if `viewOwn` is true, then it will call `scopeCanRetrieveOwnRecord` scope
+* else if  `view` is true, then it will call `scopeCanRetrieveAnyRecord` scope
+* else it will fallback to `scopeCannotRetrieveAnyRecord` scope
 
 To modify the user column, add this to the model.
 ```
-    protected function getOwnerKeyColumn(): string
+    public function getOwnerKeyColumn(): ?string
     {
         return 'custom_id';
     }

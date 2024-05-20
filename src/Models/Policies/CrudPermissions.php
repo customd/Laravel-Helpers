@@ -37,24 +37,25 @@ trait CrudPermissions
     }
 
 
-    protected function canOnModel(Authenticatable&Authorizable $user, string $action, Model $model): ?bool
+    /**
+     * allows us to check if the user can perform the action on the model before the global key,
+     * only if true is returned will it override the other checks.
+     */
+    protected function canOnModel(Authenticatable&Authorizable $user, string $action, Model $model): bool
     {
 
         // if we are using the permission based access, this should allow us to lock to the owner user.
-        if (! in_array(PermissionBasedAccess::class, class_uses_recursive($model)) && (! method_exists($model, 'getOwnerKeyColumn') || $model->getOwnerKeyColumn() === null)) {
-            return null;
+        // we only use this if the class us using the permissionBasedAccess Trait and the ownerKeyColumn is set. (this could be more advanced in the future)
+        // also only keys onto the basic crud actions excluding create
+        if (! in_array($action, [ 'view', 'update', 'delete'])  ||
+            ! in_array(PermissionBasedAccess::class, class_uses_recursive($model)) ||
+            $model->getOwnerKeyColumn() !== null
+        ) {
+            return false;
         }
 
         $permission = $this->permission_name ?? self::parsePermissionNameFromPolicy();
-        if ($action === 'view' || $action === 'viewAny') {
-            $permission = $permission . '.viewOwn';
-        }
-        if ($action === 'update') {
-            $permission = $permission . '.updateOwn';
-        }
-        if ($action === 'delete') {
-            $permission = $permission . '.deleteOwn';
-        }
+        $permission = $permission . '.' . $action . 'Own'; //is there an {action}Own permission?
 
         if ($model->getOwnerKeyColumn() === $user->getAuthIdentifier()) {
             return $user->can($permission);

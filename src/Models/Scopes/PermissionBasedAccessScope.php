@@ -19,21 +19,17 @@ class PermissionBasedAccessScope implements Scope
         }
 
         $permissions = $model->getViewPermissionsFromGate(); //@phpstan-ignore-line => method from trait
-        $canView    = $permissions['canView'];
-        $canViewOwn = $permissions['canViewOwn'];
 
-        // no permissions at all
-        if (! $canView  && ! $canViewOwn) {
-            $builder->accessForbidden(); //@phpstan-ignore-line => scope from trait
+        if ($permissions['canViewOwn']) {
+            $builder->canRetrieveOwnRecord();
+            return;
+        }
+        if ($permissions['canView']) {
+            $builder->canRetrieveAnyRecord();
             return;
         }
 
-        if ($canView && ! $canViewOwn) {
-            $builder->fullAccessAllowed(); //@phpstan-ignore-line => scope from trait
-            return;
-        }
-
-        $builder->userAccessAllowed(); //@phpstan-ignore-line => scope from trait
+        $builder->cannotRetrieveAnyRecord(); //@phpstan-ignore-line => scope from trait
     }
 
 
