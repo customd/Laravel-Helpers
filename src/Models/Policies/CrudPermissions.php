@@ -2,13 +2,14 @@
 
 namespace CustomD\LaravelHelpers\Models\Policies;
 
-
 use Illuminate\Support\Str;
+use \Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Access\Authorizable;
-use \Illuminate\Auth\Access\Response;
+use CustomD\LaravelHelpers\Traits\PermissionBasedAccess;
+use CustomD\LaravelHelpers\Models\Scopes\PermissionBasedAccessScope;
 
 trait CrudPermissions
 {
@@ -22,7 +23,7 @@ trait CrudPermissions
         ])->filter()->implode(".");
 
         if ($model) {
-            $can = $this->canOnModel($user, $permission, $model);
+            $can = $this->canOnModel($user, $action, $model);
             if ($can === true) {
                 return $can;
             }
@@ -35,26 +36,35 @@ trait CrudPermissions
         return $user->can($permission) ? $this->allow() : $this->deny();
     }
 
-    /**
-     * @still in development
-     */
-    protected function canOnModel(Authenticatable&Authorizable $user, string $permission, Model $model): ?true
+
+    protected function canOnModel(Authenticatable&Authorizable $user, string $action, Model $model): ?bool
     {
 
-        if (property_exists($this, 'ownerIdColumn') === false) {
+        // if we are using the permission based access, this should allow us to lock to the owner user.
+        if (! in_array(PermissionBasedAccess::class, class_uses_recursive($model)) && (! method_exists($model, 'getOwnerKeyColumn') || $model->getOwnerKeyColumn() === null)) {
             return null;
         }
 
-        $ownerId = $model->getAttribute($this->ownerIdColumn);
-        if ($ownerId === $user->getAuthIdentifier()) {
-            return true;
+        $permission = $this->permission_name ?? self::parsePermissionNameFromPolicy();
+        if ($action === 'view' || $action === 'viewAny') {
+            $permission = $permission . '.viewOwn';
+        }
+        if ($action === 'update') {
+            $permission = $permission . '.updateOwn';
+        }
+        if ($action === 'delete') {
+            $permission = $permission . '.deleteOwn';
+        }
+
+        if ($model->getOwnerKeyColumn() === $user->getAuthIdentifier()) {
+            return $user->can($permission);
         }
 
         return null;
     }
 
     /**
-     * @still in development
+     * @still in development - not yet tested nor used and can change at any given time.
      */
     protected function canOnModelField(Authenticatable&Authorizable $user, string $permission, Model $model): ?bool
     {
@@ -115,5 +125,4 @@ trait CrudPermissions
     {
         return $this->can($user, 'restore');
     }
-
 }

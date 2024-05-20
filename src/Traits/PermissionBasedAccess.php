@@ -16,7 +16,7 @@ trait PermissionBasedAccess
         static::addGlobalScope(new PermissionBasedAccessScope());
     }
 
-    protected function getOwnerKeyColumn(): string
+    public function getOwnerKeyColumn(): ?string
     {
         return 'user_id';
     }

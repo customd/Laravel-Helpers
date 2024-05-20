@@ -25,6 +25,12 @@ trait SeedsPermissions
         if (property_exists($this, 'permissions')) {
             $this->seedPermissions();
         }
+        if (property_exists($this, 'removeRoles')) {
+            $this->removeRoles();
+        }
+        if (property_exists($this, 'removePermissions')) {
+            $this->removePermissions();
+        }
 
         $this->seeded();
     }
@@ -56,11 +62,30 @@ trait SeedsPermissions
 
     protected function seeding(): void
     {
-
     }
 
     protected function seeded(): void
     {
+    }
 
+
+    protected function removeRoles(): void
+    {
+        foreach ($this->removeRoles as $role) {
+            $role = Role::findByName($role);
+            if ($role) {
+                $role->delete();
+            }
+        }
+    }
+
+    protected function removePermissions(): void
+    {
+        foreach ($this->removePermissions as $permission => $roles) {
+            $rolePermissions = Permission::findByName($permission);
+            foreach ($roles as $roleName) {
+                $this->getRole($roleName)->revokePermissionTo($rolePermissions);
+            }
+        }
     }
 }
