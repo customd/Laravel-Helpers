@@ -65,8 +65,8 @@ trait PermissionBasedAccess
         $viewOwn = "{$tablePermissionKey}.viewOwn";
 
         // what if a specific permission does not exist?
-        $canView = Gate::has($view) ? $user->can($view) : false;
-        $canViewOwn = Gate::has($viewOwn) ? $user->can($viewOwn) : false;
+        $canView = $user->can($view);
+        $canViewOwn = $user->can($viewOwn);
 
         return [
             'canView'    => $canView,
