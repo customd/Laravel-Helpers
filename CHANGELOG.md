@@ -1,3 +1,10 @@
+## [5.4.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.0...v5.4.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* crud permissions on policy to make use of same permission from trait on model. ([b52f7be](https://git.customd.com/composer/Laravel-Helpers/commit/b52f7be85830316f021d3f1de06a02be82884a80))
+
 # [5.4.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.3.2...v5.4.0) (2024-05-19)
 
 
