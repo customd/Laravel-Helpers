@@ -23,13 +23,11 @@ trait CrudPermissions
         ])->filter()->implode(".");
 
         if ($model) {
-            $can = $this->canOnModel($user, $action, $model);
-            if ($can === true) {
-                return $can;
+            if ($this->canOnModel($user, $action, $model)) {
+                return $this->allow();
             }
-            $can = $this->canOnModelField($user, $permission, $model);
-            if ($can === true) {
-                return $can;
+            if ($this->canOnModelField($user, $permission, $model)) {
+                return $this->allow();
             }
         }
 
@@ -49,7 +47,7 @@ trait CrudPermissions
         // also only keys onto the basic crud actions excluding create
         if (! in_array($action, [ 'view', 'update', 'delete'])  ||
             ! in_array(PermissionBasedAccess::class, class_uses_recursive($model)) ||
-            $model->getOwnerKeyColumn() !== null
+            $model->getOwnerKeyColumn() === null
         ) {
             return false;
         }
@@ -57,11 +55,11 @@ trait CrudPermissions
         $permission = $this->permission_name ?? self::parsePermissionNameFromPolicy();
         $permission = $permission . '.' . $action . 'Own'; //is there an {action}Own permission?
 
-        if ($model->getOwnerKeyColumn() === $user->getAuthIdentifier()) {
+        if ($model->getAttribute($model->getOwnerKeyColumn()) === $user->getAuthIdentifier()) {
             return $user->can($permission);
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -99,7 +97,7 @@ trait CrudPermissions
 
     public function view(Authenticatable&Authorizable $user, Model $model): Response
     {
-        return $this->can($user, 'view');
+        return $this->can($user, 'view', $model);
     }
 
     public function create(Authenticatable&Authorizable $user): Response
@@ -109,21 +107,21 @@ trait CrudPermissions
 
     public function update(Authenticatable&Authorizable $user, Model $model): Response
     {
-        return $this->can($user, 'update');
+        return $this->can($user, 'update', $model);
     }
 
     public function delete(Authenticatable&Authorizable $user, Model $model): Response
     {
-        return $this->can($user, 'delete');
+        return $this->can($user, 'delete', $model);
     }
 
     public function forceDelete(Authenticatable&Authorizable $user, Model $model): Response
     {
-        return $this->can($user, 'forceDelete');
+        return $this->can($user, 'forceDelete', $model);
     }
 
     public function restore(Authenticatable&Authorizable $user, Model $model): Response
     {
-        return $this->can($user, 'restore');
+        return $this->can($user, 'restore', $model);
     }
 }
