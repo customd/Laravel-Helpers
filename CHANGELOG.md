@@ -1,3 +1,10 @@
+## [5.4.4](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.3...v5.4.4) (2024-05-20)
+
+
+### Bug Fixes
+
+* issue with gates on global scope ([c26eb30](https://git.customd.com/composer/Laravel-Helpers/commit/c26eb30965565494e4daab5b9f2996be8473e288))
+
 ## [5.4.3](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.2...v5.4.3) (2024-05-20)
 
 
