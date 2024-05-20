@@ -21,11 +21,11 @@ class PermissionBasedAccessScope implements Scope
         $permissions = $model->getViewPermissionsFromGate(); //@phpstan-ignore-line => method from trait
 
         if ($permissions['canViewOwn']) {
-            $builder->canRetrieveOwnRecord();
+            $builder->canRetrieveOwnRecord();//@phpstan-ignore-line => scope from trait
             return;
         }
         if ($permissions['canView']) {
-            $builder->canRetrieveAnyRecord();
+            $builder->canRetrieveAnyRecord();//@phpstan-ignore-line => scope from trait
             return;
         }
 
