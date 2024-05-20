@@ -1,3 +1,11 @@
+## [5.4.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.1...v5.4.2) (2024-05-20)
+
+
+### Bug Fixes
+
+* crud access query scopes ([cc60345](https://git.customd.com/composer/Laravel-Helpers/commit/cc60345f355c7e178fa003730af8b8fc65a2c419))
+* phpstan ([86f54bf](https://git.customd.com/composer/Laravel-Helpers/commit/86f54bfe36d50373af2872ce7cf3b41413196464))
+
 ## [5.4.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.0...v5.4.1) (2024-05-20)
 
 
