@@ -1,3 +1,10 @@
+## [5.4.3](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.2...v5.4.3) (2024-05-20)
+
+
+### Bug Fixes
+
+* minor updates to policy automation ([45b1656](https://git.customd.com/composer/Laravel-Helpers/commit/45b1656da97cad2f9dbbfde2218bcb9e228fd76c))
+
 ## [5.4.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.1...v5.4.2) (2024-05-20)
 
 
