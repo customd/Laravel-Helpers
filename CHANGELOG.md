@@ -1,3 +1,10 @@
+# [5.5.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.5...v5.5.0) (2024-05-22)
+
+
+### Features
+
+* ability to sync roles opt-in ([4d2ae81](https://git.customd.com/composer/Laravel-Helpers/commit/4d2ae81bf250170eeb04d0ca2f4769685bde927f))
+
 ## [5.4.5](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.4...v5.4.5) (2024-05-22)
 
 
