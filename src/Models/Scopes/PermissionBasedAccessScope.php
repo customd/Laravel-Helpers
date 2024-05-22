@@ -38,8 +38,6 @@ class PermissionBasedAccessScope implements Scope
      */
     public function extend(Builder $builder): void
     {
-        $builder->macro('withoutPermissionCheck', function (Builder $builder) {
-            return $builder->withoutGlobalScope($this);
-        });
+        $builder->macro('withoutPermissionCheck', fn (Builder $builder) => $builder->withoutGlobalScope($this));
     }
 }

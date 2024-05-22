@@ -1,6 +1,21 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined method Carbon\\\\Carbon\\:\\:getUserTimezone\\(\\)\\.$#"
+			count: 13
+			path: src/CdCarbonMixin.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Query\\\\Builder\\:\\:iWhere\\(\\)\\.$#"
+			count: 1
+			path: src/Database/Query/Mixins/NullOrEmptyMixin.php
+
+		-
+			message: "#^Parameter \\#1 \\$scope of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:withoutGlobalScope\\(\\) expects Illuminate\\\\Database\\\\Eloquent\\\\Scope\\|string, Illuminate\\\\Database\\\\Eloquent\\\\Builder given\\.$#"
+			count: 1
+			path: src/Models/Scopes/PermissionBasedAccessScope.php
+
+		-
 			message: "#^Class CustomD\\\\LaravelHelpers\\\\Repository\\\\BaseRepository implements generic interface CustomD\\\\LaravelHelpers\\\\Repository\\\\BaseRepositoryInterface but does not specify its types\\: TModelClass$#"
 			count: 1
 			path: src/Repository/BaseRepository.php
@@ -29,3 +44,8 @@ parameters:
 			message: "#^Type mixed in generic type Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, mixed\\> in PHPDoc tag @return is not subtype of template type TModel of Illuminate\\\\Database\\\\Eloquent\\\\Model of class Illuminate\\\\Database\\\\Eloquent\\\\Collection\\.$#"
 			count: 2
 			path: src/Repository/BaseRepositoryInterface.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Str\\:\\:isEmail\\(\\)\\.$#"
+			count: 1
+			path: src/ServiceProvider.php
