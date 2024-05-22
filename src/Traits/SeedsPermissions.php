@@ -13,6 +13,11 @@ trait SeedsPermissions
      */
     protected static array $cachedRoles = [];
 
+    protected function shouldSyncRolePermissions() : bool
+    {
+        return property_exists($this, 'syncRolePermissions') && $this->syncRolePermissions;
+    }
+
     public function run(): void
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
@@ -39,8 +44,12 @@ trait SeedsPermissions
     {
         foreach ($this->permissions as $permission => $roles) {
             $rolePermissions = Permission::firstOrCreate(['name' => $permission]);
-            foreach ($roles as $roleName) {
-                $this->getRole($roleName)->givePermissionTo($rolePermissions);
+            if($this->shouldSyncRolePermissions()){
+                $rolePermissions->syncRoles($roles);
+            }else {
+                foreach ($roles as $roleName) {
+                    $this->getRole($roleName)->givePermissionTo($rolePermissions);
+                }
             }
         }
     }
