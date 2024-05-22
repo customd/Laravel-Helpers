@@ -1,3 +1,10 @@
+## [5.4.5](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.4...v5.4.5) (2024-05-22)
+
+
+### Bug Fixes
+
+* should not cast to an array as some values could be strict typed ([3fd624f](https://git.customd.com/composer/Laravel-Helpers/commit/3fd624f883c807d83c3a9eff9005504cadf135f5))
+
 ## [5.4.4](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.3...v5.4.4) (2024-05-20)
 
 
