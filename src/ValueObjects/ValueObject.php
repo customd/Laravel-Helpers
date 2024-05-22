@@ -40,7 +40,7 @@ abstract readonly class ValueObject implements Arrayable
 
             $args = $args->only(
                 static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
-            )->toArray();
+            );
         }
 
         $mapped = static::resolveChildValueObjects(...$args);
