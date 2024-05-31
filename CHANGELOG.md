@@ -1,3 +1,10 @@
+## [5.5.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.5.0...v5.5.1) (2024-05-31)
+
+
+### Bug Fixes
+
+* orIWhere command param count issue ([69b0330](https://git.customd.com/composer/Laravel-Helpers/commit/69b03300957c4dc737c654bd396eb92888b60ca0))
+
 # [5.5.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.4.5...v5.5.0) (2024-05-22)
 
 
