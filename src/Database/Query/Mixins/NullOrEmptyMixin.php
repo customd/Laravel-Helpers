@@ -80,6 +80,11 @@ class NullOrEmptyMixin
     {
         return function (string|array $column, $operator = null, $value = null): Builder {
             /** @var \Illuminate\Database\Query\Builder $this */
+            [$value, $operator] = $this->prepareValueAndOperator(
+                $value,
+                $operator,
+                func_num_args() === 2
+            );
             return $this->iWhere($column, $operator, $value, 'or');
         };
     }
