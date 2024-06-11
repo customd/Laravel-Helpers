@@ -1,21 +1,39 @@
 <?php
 namespace CustomD\LaravelHelpers\Filament\Plugins;
 
+use Closure;
 use Filament\Panel;
-use Livewire\Livewire;
 use Filament\Contracts\Plugin;
+use Illuminate\Support\HtmlString;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Forms\Components\DateTimePicker;
 use CustomD\LaravelHelpers\Http\Middleware\UserTimeZone;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\HtmlString;
 
 class UserTimeZonePlugin implements Plugin
 {
+
+    protected bool $withDateHelperText = true;
+
+    protected ?Closure $additionalDateConfigs = null;
+
+
     public static function make(): self
     {
         return new self();
+    }
+
+    public function hideDateHelperText(bool $disabled = true): self
+    {
+        $this->withDateHelperText = !$disabled;
+        return $this;
+    }
+
+    public function setAdditionalDateConfigs(Closure $callback): self
+    {
+        $this->additionalDateConfigs = $callback;
+        return $this;
     }
 
     public function getId(): string
@@ -25,28 +43,41 @@ class UserTimeZonePlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        Livewire::addPersistentMiddleware([
-            UserTimeZone::class,
-        ]);
 
         $panel->middleware([
             UserTimeZone::class,
-        ]);
+        ], true);
     }
 
     public function boot(Panel $panel): void
     {
 
-        $timezone = config('request.user.timezone') ?? config('app.timezone') ?? 'UTC';
-        if (is_string($timezone) === false || blank($timezone)) {
-            $timezone = 'UTC';
-        }
+
+        $timezone = function() {
+            $tz = config('request.user.timezone') ?? config('app.timezone') ?? 'UTC';
+            if (is_string($tz) === false || blank($tz)) {
+                $tz = 'UTC';
+            }
+            return $tz;
+        };
+
 
         DateTimePicker::configureUsing(
-            fn (DateTimePicker $dateTimePicker): DateTimePicker  => $dateTimePicker->timezone($timezone)
-                ->helperText(
-                    fn(DateTimePicker $component): Htmlable => new HtmlString("Using the <b><i>{$component->getTimezone()}</i></b> timezone")
-                )
+            function (DateTimePicker $dateTimePicker) use ($timezone): DateTimePicker {
+                $dateTimePicker->timezone($timezone)
+
+                    ->helperText(
+                        fn(DateTimePicker $component): ?Htmlable => $this->withDateHelperText ? new HtmlString("Using the <b><i>{$component->getTimezone()}</i></b> timezone") : null
+                    );
+
+                    if($this->additionalDateConfigs){
+                        $call = $this->additionalDateConfigs;
+                      $call($dateTimePicker);
+                    }
+
+                    return $dateTimePicker;
+
+            } 
         );
 
         TextColumn::configureUsing(
