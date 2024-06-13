@@ -1,3 +1,10 @@
+## [5.5.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.5.1...v5.5.2) (2024-06-13)
+
+
+### Bug Fixes
+
+* sets users timezone in filament by default ([0201be1](https://git.customd.com/composer/Laravel-Helpers/commit/0201be100ee4a4b4c40d22d704f48f46b237a333))
+
 ## [5.5.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.5.0...v5.5.1) (2024-05-31)
 
 
