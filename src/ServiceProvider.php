@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
@@ -47,6 +49,38 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         Stringable::macro('isEmail', function (): bool {
             /** @var Stringable $this */
             return Str::isEmail($this->toString());
+        });
+
+        Arr::macro('pushBefore', function (array $existing, $key, $new): array {
+            $keys = array_keys($existing);
+            $index = array_search($key, $keys);
+            $pos = false === $index ? count($existing) : $index - 1;
+            return array_merge(array_slice($existing, 0, $pos), $new, array_slice($existing, $pos));
+        });
+
+        Arr::macro('pushAfter', function (array $existing, $key, $new): array {
+            $keys = array_keys($existing);
+            $index = array_search($key, $keys);
+            $pos = false === $index ? count($existing) : $index + 1;
+            return array_merge(array_slice($existing, 0, $pos), $new, array_slice($existing, $pos));
+        });
+
+        Collection::macro('pushBefore', function ($key, $new): Collection {
+            /** @var Collection $this */
+            $keys = $this->keys()->all();
+            $index = array_search($key, $keys);
+            $pos = false === $index ? count($this->items) : $index - 1;
+            $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos));
+            return $this;
+        });
+
+        Collection::macro('pushAfter', function ($key, $new): Collection {
+            /** @var Collection $this */
+            $keys = $this->keys()->all();
+            $index = array_search($key, $keys);
+            $pos = false === $index ? count($this->items) : $index + 1;
+            $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos));
+            return $this;
         });
     }
 

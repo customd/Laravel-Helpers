@@ -141,6 +141,54 @@ $app->make(Action::class)->execute(...)
 If you discover any security related issues, please email
 instead of using the issue tracker.
 
+## String Helpers
+
+**isEmail** -- usage `Str::isEmail('xxx')` or `str('xxx')->isEmail()` -- will return boolean.
+
+## Array Helpers
+
+**pushBefore** - will push one or more items before the specified key, or append to the end of the array if the key does not exist:
+**PushAfter** will push one or more items after the specified key
+```php
+$arr = [
+  'one' => 'two',
+  'three' => 'four',
+  'ten' => 'eleven',
+];
+
+$missing = [
+  'four' => 'five',
+  'six' => 'seven',
+  'eight' => 'nine'
+];
+
+$new = Arr::pushBefore($arr, 'eight', $missing);
+// or
+$new = Arr::pushAfter($arr, 'three', $missing);
+
+```
+## Collection Helpers
+
+**pushBefore** - will push one or more items before the specified key, or append to the end of the array if the key does not exist:
+**PushAfter** will push one or more items after the specified key
+```php
+$collection = collect([
+  'one' => 'two',
+  'three' => 'four',
+  'ten' => 'eleven',
+]);
+
+$missing = [
+  'four' => 'five',
+  'six' => 'seven',
+  'eight' => 'nine'
+];
+
+$collection->pushBefore('eight', $missing);
+// or
+$collection->pushAfter('three', $missing);
+
+```
 
 ## DB Macros
 
