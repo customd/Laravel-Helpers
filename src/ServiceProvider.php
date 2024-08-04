@@ -54,7 +54,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         Arr::macro('pushBefore', function (array $existing, $key, $new): array {
             $keys = array_keys($existing);
             $index = array_search($key, $keys);
-            $pos = false === $index ? count($existing) : $index - 1;
+            $pos = false === $index ? count($existing) : $index;
             return array_merge(array_slice($existing, 0, $pos), $new, array_slice($existing, $pos));
         });
 
@@ -69,7 +69,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             /** @var Collection $this */
             $keys = $this->keys()->all();
             $index = array_search($key, $keys);
-            $pos = false === $index ? count($this->items) : $index - 1;
+            $pos = false === $index ? count($this->items) : $index;
             $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos));
             return $this;
         });
