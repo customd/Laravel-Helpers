@@ -38,6 +38,7 @@ abstract readonly class ValueObject implements Arrayable
                 default => $args,
             };
 
+
             $args = $args->only(
                 static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
             );
@@ -66,7 +67,6 @@ abstract readonly class ValueObject implements Arrayable
             return null;
         }
     }
-
 
     public static function fromRequest(FormRequest $request, bool $onlyValidated = true): static
     {
@@ -151,12 +151,13 @@ abstract readonly class ValueObject implements Arrayable
                     return;
                 }
                 $attribute = $attributes->getArguments()[0];
+                $collectionClass = $attributes->getArguments()[1] ?? Collection::class;
                 $arg = $args[$name];
-                if ($arg instanceof Collection) {
+                if ($arg instanceof $collectionClass) {
                     return;
                 }
                 /** @phpstan-ignore-next-line */
-                $args[$name] = collect($arg)->map(fn($item) => $attribute::make(...$item));
+                $args[$name] = (new $collectionClass($arg))->map(fn($item) => $attribute::make(...$item));
             });
 
         return $args; //@phpstan-ignore-line

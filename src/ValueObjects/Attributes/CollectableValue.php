@@ -7,7 +7,7 @@ use Attribute;
 class CollectableValue
 {
 
-    public function __construct(public string $class)
+    public function __construct(public string $class, public ?string $collectionClass = null)
     {
     }
 }
