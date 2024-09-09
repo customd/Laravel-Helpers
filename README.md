@@ -396,7 +396,7 @@ The attributes available are:
 
 Mapping Valueobject from your Request would be as easy as doing one of the following:
 ```php
-//eiterh in your code where you need it.
+//either in your code where you need it.
 $object = ValueObject::fromRequest($MyFormRequest, true|false); //defaults to true (validated only values, false will be all from the request);
 
 //or add a method to your FormRequest
@@ -405,6 +405,19 @@ public function getObject(): ValueObject
   return ValueObject::fromRequest($this);
 }
 ```
+
+As we are using final classes, these are immutable, if you need a cloned copy with edited values you can use the put command to create a new value object:
+eg:
+
+```php
+$object->put('key','value'); //will set the key to value
+$object->put('key.sub', 'valuesub' ); // will set the array key sub value to valuesub
+$object->put('key', ['new' =>'yes']); //will set the array key to be ['new' => 'yes'] -- overwriting the entire array
+$object->put(['key.new' => 'yes','key.maybe' => 'no']); //this will NOT override the entire key array, only set the new and maybe values in the actual value object array.
+
+
+```
+
 
 ## Larastan Stubs
 **these are temporary only till implemented by larastan**

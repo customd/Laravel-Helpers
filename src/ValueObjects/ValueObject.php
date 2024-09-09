@@ -254,4 +254,27 @@ abstract readonly class ValueObject implements Arrayable
             ->map(fn (ReflectionAttribute $attribute): string => $attribute->getArguments()[0])
             ->first();
     }
+
+    /**
+     * this allows you to create a new valueobject with updated values
+     * @param string|array $key - dot notation accepted, this is the key you wish to override, passing an key=>value array here will set all keys passed
+     * @param mixed $value - values to replace when doing single keys.
+     */
+    public function put(string|array $key, mixed $value = null): static
+    {
+        $data = $this->toArray();
+        if(is_string($key)){
+            data_set($data, $key, $value);
+            return static::fromArray($data);
+        }
+
+        $dots = Arr::dot($key);
+
+        foreach ($dots as $k => $v) {
+            data_set($data, $k, $v);
+        }
+
+        return static::fromArray($data);
+
+    }
 }
