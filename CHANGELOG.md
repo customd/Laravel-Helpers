@@ -1,3 +1,17 @@
+# [5.6.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.5.2...v5.6.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* add put method in valueobject to clone to a new one with edited values ([8d66db8](https://git.customd.com/composer/Laravel-Helpers/commit/8d66db83307dfa6755e42ee112b243ce96c22e09))
+* before index on merge ([e3cd234](https://git.customd.com/composer/Laravel-Helpers/commit/e3cd23453809572fc22aa56e14aacb4bdbaae812))
+* custom collectoin for collectable ([b05f312](https://git.customd.com/composer/Laravel-Helpers/commit/b05f312d893ec4cfab353c8f9501412bbad692da))
+
+
+### Features
+
+* added pushBefore and pushAfter helpers ([4f745d0](https://git.customd.com/composer/Laravel-Helpers/commit/4f745d0bad0721ad097406c9176e6c71c5957faa))
+
 ## [5.5.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.5.1...v5.5.2) (2024-06-13)
 
 
