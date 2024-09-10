@@ -2,7 +2,9 @@
 namespace CustomD\LaravelHelpers\ValueObjects;
 
 use ReflectionClass;
+use ReflectionAttribute;
 use ReflectionParameter;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,7 +14,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\MakeableObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\ChildValueObject;
 use CustomD\LaravelHelpers\ValueObjects\Attributes\CollectableValue;
-use ReflectionAttribute;
 
 /**
  * @implements Arrayable<string,mixed>
@@ -37,7 +38,6 @@ abstract readonly class ValueObject implements Arrayable
                 'studly' => $args->mapWithKeys(fn($value, $key) => [str($key)->studly()->toString() => $value]),
                 default => $args,
             };
-
 
             $args = $args->only(
                 static::getConstructorArgs()->map(fn(ReflectionParameter $parameter) => $parameter->getName())
@@ -257,13 +257,13 @@ abstract readonly class ValueObject implements Arrayable
 
     /**
      * this allows you to create a new valueobject with updated values
-     * @param string|array $key - dot notation accepted, this is the key you wish to override, passing an key=>value array here will set all keys passed
+     * @param string|array<string,mixed> $key - dot notation accepted, this is the key you wish to override, passing an key=>value array here will set all keys passed
      * @param mixed $value - values to replace when doing single keys.
      */
     public function put(string|array $key, mixed $value = null): static
     {
         $data = $this->toArray();
-        if(is_string($key)){
+        if (is_string($key)) {
             data_set($data, $key, $value);
             return static::fromArray($data);
         }
@@ -275,6 +275,5 @@ abstract readonly class ValueObject implements Arrayable
         }
 
         return static::fromArray($data);
-
     }
 }

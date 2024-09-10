@@ -66,20 +66,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         Collection::macro('pushBefore', function ($key, $new): Collection {
-            /** @var Collection $this */
+            /** @var Collection<array-key,mixed> $this */
             $keys = $this->keys()->all();
             $index = array_search($key, $keys);
-            $pos = false === $index ? count($this->items) : $index;
-            $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos));
+            $pos = false === $index ? count($this->items) : $index; //@phpstan-ignore property.protected
+            $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos)); //@phpstan-ignore-line property.protected
             return $this;
         });
 
         Collection::macro('pushAfter', function ($key, $new): Collection {
-            /** @var Collection $this */
+             /** @var Collection<array-key,mixed> $this */
             $keys = $this->keys()->all();
             $index = array_search($key, $keys);
-            $pos = false === $index ? count($this->items) : $index + 1;
-            $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos));
+            $pos = false === $index ? count($this->items) : $index + 1; //@phpstan-ignore property.protected
+            $this->items = array_merge(array_slice($this->items, 0, $pos), $new, array_slice($this->items, $pos)); //@phpstan-ignore-line property.protected
             return $this;
         });
     }
