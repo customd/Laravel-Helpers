@@ -75,7 +75,7 @@ class DatabaseMacrosTest extends TestCase
             ->orIWhere([
                 'col'  => 'umn',
                 'mnot' => 'tonm',
-                ['asdf' ,'!=', 'asdf', 'or'],
+                ['asdf' ,'!=', 'asdf'],
             ]);
         $this->assertStringContainsString('LOWER(name) = ?', $query->toSql());
         $this->assertStringContainsString('or LOWER(country) != ?', $query->toSql());

@@ -25,7 +25,7 @@ class RuntimeException extends CoreException
      * @param Throwable|null $previous
      * @return void
      */
-    public function __construct(string $message = "", string|array|null $extra = null, int $statusCode = 500, int $code = 0, Throwable $previous = null)
+    public function __construct(string $message = "", string|array|null $extra = null, int $statusCode = 500, int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->extra = $extra;
