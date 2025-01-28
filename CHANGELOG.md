@@ -1,3 +1,10 @@
+## [5.6.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.6.0...v5.6.1) (2025-01-28)
+
+
+### Bug Fixes
+
+* php 8.4 deprecation fix on exception previous ([c8c5d47](https://git.customd.com/composer/Laravel-Helpers/commit/c8c5d47e36d9e9dc13fb569b69e87a1925247a2b))
+
 # [5.6.0](https://git.customd.com/composer/Laravel-Helpers/compare/v5.5.2...v5.6.0) (2024-09-10)
 
 
