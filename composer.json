@@ -19,15 +19,15 @@
   ],
   "require": {
     "php": "^8.2",
-    "illuminate/notifications": "^9.0|^10.0|^11.0",
-    "illuminate/support": "^9.0|^10|^11.0"
+    "illuminate/notifications": "^9.0|^10.0|^11.0|^12.0",
+    "illuminate/support": "^9.0|^10|^11.0|^12.0"
   },
   "require-dev": {
     "filament/filament": "^3.2",
     "phpsa/laravel-api-controller": "*",
     "spatie/laravel-permission": "^6.0",
-    "nunomaduro/larastan": "^2.0",
-    "orchestra/testbench": "^7.0|^8.0|^9.0",
+    "nunomaduro/larastan": "^3.0",
+    "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
     "phpunit/phpunit": "^9.0|^10.0"
   },
   "autoload": {
