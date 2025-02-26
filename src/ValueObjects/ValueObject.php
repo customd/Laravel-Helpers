@@ -57,7 +57,6 @@ abstract readonly class ValueObject implements Arrayable
      *
      * @param mixed $args
      * @return ?static
-     * @throws BindingResolutionException
      */
     public static function makeOrNull(...$args): ?static
     {
@@ -263,8 +262,10 @@ abstract readonly class ValueObject implements Arrayable
     public function put(string|array $key, mixed $value = null): static
     {
         $data = $this->toArray();
+
         if (is_string($key)) {
             data_set($data, $key, $value);
+            /** @var array<string,mixed> $data */
             return static::fromArray($data);
         }
 
@@ -272,6 +273,7 @@ abstract readonly class ValueObject implements Arrayable
 
         foreach ($dots as $k => $v) {
             data_set($data, $k, $v);
+            /** @var array<string,mixed> $data */
         }
 
         return static::fromArray($data);

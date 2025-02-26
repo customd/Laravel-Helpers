@@ -4,6 +4,8 @@ namespace CustomD\LaravelHelpers\Traits;
 
 /**
  * @deprecated -- start using the attribute key
+ *
+ * @phpstan-ignore trait.unused
  */
 trait Observerable
 {

@@ -6,6 +6,9 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 
+/**
+ * @phpstan-ignore trait.unused
+ */
 trait SeedsPermissions
 {
     /**
@@ -44,9 +47,9 @@ trait SeedsPermissions
     {
         foreach ($this->permissions as $permission => $roles) {
             $rolePermissions = Permission::firstOrCreate(['name' => $permission]);
-            if($this->shouldSyncRolePermissions()){
+            if ($this->shouldSyncRolePermissions()) {
                 $rolePermissions->syncRoles($roles);
-            }else {
+            } else {
                 foreach ($roles as $roleName) {
                     $this->getRole($roleName)->givePermissionTo($rolePermissions);
                 }

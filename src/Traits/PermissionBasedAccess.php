@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 
+/**
+ * @phpstan-ignore trait.unused
+ */
 trait PermissionBasedAccess
 {
     protected static function bootPermissionBasedAccess(): void

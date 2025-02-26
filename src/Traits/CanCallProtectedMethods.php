@@ -4,6 +4,9 @@ namespace CustomD\LaravelHelpers\Traits;
 
 use ReflectionClass;
 
+/**
+ * @phpstan-ignore trait.unused
+ */
 trait CanCallProtectedMethods
 {
 

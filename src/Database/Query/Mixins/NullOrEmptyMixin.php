@@ -5,7 +5,9 @@ namespace CustomD\LaravelHelpers\Database\Query\Mixins;
 use Closure;
 use Illuminate\Database\Query\Builder;
 
-/** @mixin \Illuminate\Database\Query\Builder */
+/**
+ * @mixin \Illuminate\Database\Query\Builder
+ */
 
 class NullOrEmptyMixin
 {
@@ -13,7 +15,6 @@ class NullOrEmptyMixin
     public function whereNullOrEmpty(): Closure
     {
         return function (string $column): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             return $this->where(fn (Builder $builder) => $builder->where($column, '=', '')->orWhereNull($column));
         };
     }
@@ -21,7 +22,6 @@ class NullOrEmptyMixin
     public function orWhereNullOrEmpty(): Closure
     {
         return function (string $column): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             return $this->orWhere(fn (Builder $builder) => $builder->where($column, '=', '')->orWhereNull($column));
         };
     }
@@ -30,7 +30,6 @@ class NullOrEmptyMixin
     public function whereNotNullOrEmpty(): Closure
     {
         return function (string $column): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             return $this->where(fn(Builder $builder) => $builder->where($column, '!=', '')->whereNotNull($column));
         };
     }
@@ -38,7 +37,6 @@ class NullOrEmptyMixin
     public function orWhereNotNullOrEmpty(): Closure
     {
         return function (string $column): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             return $this->orWhere(fn(Builder $builder) => $builder->where($column, '!=', '')->whereNotNull($column));
         };
     }
@@ -47,7 +45,6 @@ class NullOrEmptyMixin
     {
         /** @param $value mixed **/
         return function (string $column, $operator = null, $value = null, $boolean = 'and'): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             [$value, $operator] = $this->prepareValueAndOperator(
                 $value,
                 $operator,
@@ -61,7 +58,6 @@ class NullOrEmptyMixin
     public function iWhere(): Closure
     {
         return function (string|array $column, $operator = null, $value = null, $boolean = 'and'): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             if (is_array($column)) {
                 return $this->addArrayOfWheres($column, $boolean, 'iWhere'); //@phpstan-ignore-line
             }
@@ -79,13 +75,12 @@ class NullOrEmptyMixin
     public function orIWhere(): Closure
     {
         return function (string|array $column, $operator = null, $value = null): Builder {
-            /** @var \Illuminate\Database\Query\Builder $this */
             [$value, $operator] = $this->prepareValueAndOperator(
                 $value,
                 $operator,
                 func_num_args() === 2
             );
-            return $this->iWhere($column, $operator, $value, 'or');
+            return $this->iWhere($column, $operator, $value, 'or'); //@phpstan-ignore  return.type
         };
     }
 }

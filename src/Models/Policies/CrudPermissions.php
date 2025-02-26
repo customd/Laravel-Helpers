@@ -11,6 +11,9 @@ use Illuminate\Contracts\Auth\Access\Authorizable;
 use CustomD\LaravelHelpers\Traits\PermissionBasedAccess;
 use CustomD\LaravelHelpers\Models\Scopes\PermissionBasedAccessScope;
 
+/**
+ * @phpstan-ignore trait.unused
+ */
 trait CrudPermissions
 {
     use HandlesAuthorization;
