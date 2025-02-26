@@ -1,3 +1,10 @@
+## [5.6.2](https://git.customd.com/composer/Laravel-Helpers/compare/v5.6.1...v5.6.2) (2025-02-26)
+
+
+### Bug Fixes
+
+* laravel 12 ([c0146f1](https://git.customd.com/composer/Laravel-Helpers/commit/c0146f14f4cebf8e50a908f63c885ccec76030ff))
+
 ## [5.6.1](https://git.customd.com/composer/Laravel-Helpers/compare/v5.6.0...v5.6.1) (2025-01-28)
 
 
